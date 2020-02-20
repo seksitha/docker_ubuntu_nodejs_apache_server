@@ -1,0 +1,17 @@
+{
+  "name": "node_app",
+  "version": "1.0.0",
+  "description": "just for learning",
+  "main": "index.js",
+  "scripts": { 
+    "start": "./node_modules/.bin/nodemon index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "http-server": "^0.12.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.2"
+  }
+}

@@ -1,0 +1,26 @@
+[Thu Feb 20 12:45:58.924597 2020] [mpm_prefork:notice] [pid 29] AH00163: Apache/2.4.29 (Ubuntu) configured -- resuming normal operations
+[Thu Feb 20 12:45:58.925223 2020] [core:notice] [pid 29] AH00094: Command line: '/usr/sbin/apache2'
+[Thu Feb 20 12:47:25.907683 2020] [core:warn] [pid 31] AH00098: pid file /var/run/apache2/apache2.pid overwritten -- Unclean shutdown of previous Apache run?
+[Thu Feb 20 12:47:25.911247 2020] [mpm_prefork:notice] [pid 31] AH00163: Apache/2.4.29 (Ubuntu) configured -- resuming normal operations
+[Thu Feb 20 12:47:25.911762 2020] [core:notice] [pid 31] AH00094: Command line: '/usr/sbin/apache2'
+[Thu Feb 20 12:50:00.571910 2020] [core:warn] [pid 32] AH00098: pid file /var/run/apache2/apache2.pid overwritten -- Unclean shutdown of previous Apache run?
+[Thu Feb 20 12:50:00.575786 2020] [mpm_prefork:notice] [pid 32] AH00163: Apache/2.4.29 (Ubuntu) configured -- resuming normal operations
+[Thu Feb 20 12:50:00.576362 2020] [core:notice] [pid 32] AH00094: Command line: '/usr/sbin/apache2'
+[Thu Feb 20 12:50:19.548706 2020] [core:warn] [pid 31] AH00098: pid file /var/run/apache2/apache2.pid overwritten -- Unclean shutdown of previous Apache run?
+[Thu Feb 20 12:50:19.551595 2020] [mpm_prefork:notice] [pid 31] AH00163: Apache/2.4.29 (Ubuntu) configured -- resuming normal operations
+[Thu Feb 20 12:50:19.552050 2020] [core:notice] [pid 31] AH00094: Command line: '/usr/sbin/apache2'
+[Thu Feb 20 12:54:36.521638 2020] [mpm_prefork:notice] [pid 29] AH00163: Apache/2.4.29 (Ubuntu) configured -- resuming normal operations
+[Thu Feb 20 12:54:36.522106 2020] [core:notice] [pid 29] AH00094: Command line: '/usr/sbin/apache2'
+[Thu Feb 20 13:02:09.615558 2020] [mpm_prefork:notice] [pid 29] AH00163: Apache/2.4.29 (Ubuntu) configured -- resuming normal operations
+[Thu Feb 20 13:02:09.616288 2020] [core:notice] [pid 29] AH00094: Command line: '/usr/sbin/apache2'
+[Thu Feb 20 13:04:14.731527 2020] [mpm_prefork:notice] [pid 29] AH00163: Apache/2.4.29 (Ubuntu) configured -- resuming normal operations
+[Thu Feb 20 13:04:14.732092 2020] [core:notice] [pid 29] AH00094: Command line: '/usr/sbin/apache2'
+[Thu Feb 20 13:04:42.250253 2020] [mpm_prefork:notice] [pid 30] AH00163: Apache/2.4.29 (Ubuntu) configured -- resuming normal operations
+[Thu Feb 20 13:04:42.250782 2020] [core:notice] [pid 30] AH00094: Command line: '/usr/sbin/apache2'
+[Thu Feb 20 13:06:30.117991 2020] [mpm_prefork:notice] [pid 30] AH00163: Apache/2.4.29 (Ubuntu) configured -- resuming normal operations
+[Thu Feb 20 13:06:30.118481 2020] [core:notice] [pid 30] AH00094: Command line: '/usr/sbin/apache2'
+[Thu Feb 20 13:27:58.578302 2020] [mpm_prefork:notice] [pid 31] AH00163: Apache/2.4.29 (Ubuntu) configured -- resuming normal operations
+[Thu Feb 20 13:27:58.578940 2020] [core:notice] [pid 31] AH00094: Command line: '/usr/sbin/apache2'
+[Thu Feb 20 20:42:41.854200 2020] [mpm_prefork:notice] [pid 8] AH00163: Apache/2.4.29 (Ubuntu) configured -- resuming normal operations
+[Thu Feb 20 20:42:41.856735 2020] [core:notice] [pid 8] AH00094: Command line: '/usr/sbin/apache2 -D FOREGROUND'
+sh: 1: /usr/sbin/sendmail: not found

@@ -1,0 +1,16 @@
+version: "3" #this is docker version is not app version
+services:
+  web: # apache server
+    container_name: for_web_tutorial
+    build: . # build from Docker file not from image
+    ports:
+      - 8080:80 #ex:in
+    volumes:
+      - ./php_src:/var/www/html/
+      - ./php_src/vhosts/:/etc/apache2/conf.d/
+      - ./php_src/errorlogs/:/var/log/apache2/
+      - ./js_src/:/home/
+    tty: true
+    environment:
+      - TZ=Asia/Phnom_Penh
+    # restart: always # this is to start container when docker start / or computer reboot
