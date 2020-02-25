@@ -35,7 +35,7 @@
    
 ?>
 
-<main id='info-list' class="panel panel-info row">
+<main id='container' class="panel panel-info row">
    <?php
       // $data = read_data('info_teacher');
       // // echo '<pre>';
@@ -62,7 +62,7 @@
    ?>
    <div class="panel-heading col-md-12">
       <div class="row">
-         <div class="col-md-9"><b>Book list</b> </div>
+         <div class="col-md-1"><b>Book list</b> </div>
          <div class="col-md-1"><button data-server-read value='info_teacher' class="btn btn-info btn-sm">Teachers</button></div>
          <div class="col-md-1"><button data-server-read value='info_student' class="btn btn-info btn-sm">Students</button></div>
          <div class="col-md-1"><button data-server-read value='info_book' class="btn btn-info btn-sm">Books</button></div>

@@ -1,7 +1,7 @@
 
 RewriteEngine On
 
-RewriteBase /phpapp/
+RewriteBase /
 #
 
 #Header add Access-Control-Allow-Origin "*"

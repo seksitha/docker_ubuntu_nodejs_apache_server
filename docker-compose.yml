@@ -1,16 +1,37 @@
+# indentation is very important for yml file incorrectly done will not work
+# every container has image(s) for it to run
 version: "3" #this is docker version is not app version
 services:
-  web: # apache server
+  apache: # apache server
     container_name: for_web_tutorial
     build: . # build from Docker file not from image
     ports:
-      - 8080:80 #ex:in
+      - 8800:88 #ex:in
+      - 8811:80
     volumes:
-      - ./php_src:/var/www/html/
-      - ./php_src/vhosts/:/etc/apache2/conf.d/
-      - ./php_src/errorlogs/:/var/log/apache2/
       - ./js_src/:/home/
+      - ./php_src:/var/www/html/
+      - ./libs/:/etc/apache2/conf.d/
+      - ./libs/:/var/log/apache2/
     tty: true
+    links: 
+      - database
     environment:
       - TZ=Asia/Phnom_Penh
     # restart: always # this is to start container when docker start / or computer reboot
+  database: 
+      container_name: tutorial_db
+      image: "mysql:5"
+      ports:
+        - 3307:3306
+      volumes:
+      # need to make file sharing in docker filesharing preference to get it to work.
+        - ./mysql/data:/etc/mysql/conf.d # working-directory : mysql server directory in container
+        - ./mysql/data:/var/lib/mysql #ex/in
+      environment:
+        MYSQL_DATABASE: kasekordb
+        MYSQL_ROOT_PASSWORD: 123456 # if need to chage dont chage it here after build need to chage in mysql / phpmyadmin
+        MYSQL_USER: seksitha
+        MYSQL_USER_PASSWORD: 123456
+        MYSQL_ROOT_HOST: "%"
+        MYSQL_USER_HOST: "%"

@@ -2,7 +2,7 @@
 <html lang="en" ng-app="myApp">
 
 <head>
-    <base href="/phpapp/">
+    <base href="/">
     <meta charset="utf-8">
     <meta http-equiv="expires" content="0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -10,7 +10,6 @@
     <link rel="icon" href="public/images/favicon.ico">
     <title>PHP : Sek Sitha</title>
     <!-- CSS files -->
-    <link href="public/css/bootstrap.css" rel="stylesheet">
     <link href='public/css/app.css' rel='stylesheet'>
 
     <!-- Java Script -->

@@ -4,10 +4,11 @@
 
 */
 function getDB() {
-   $dbhost = "localhost";
-   $dbuser = "inventory";
-   $dbpass = "123456";
+   $dbhost = "database";
+   $dbuser = "root";
+   $dbpass = 123456;
    $dbname = "library";
+  //  $port = 3307;
    $database_class = new PDO("mysql:host=$dbhost;dbname=$dbname", $dbuser, $dbpass);
    $database_class->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
    return $database_class;

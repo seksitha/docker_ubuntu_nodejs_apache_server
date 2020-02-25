@@ -2,6 +2,7 @@ FROM ubuntu:latest
 
 RUN apt-get update
 RUN apt-get install -y systemd
+
 RUN DEBIAN_FRONTEND="noninteractive" apt-get -y install tzdata
 RUN apt-get install -y apache2
 RUN apt-get install -y \
@@ -21,8 +22,8 @@ RUN apt-get install -y npm
 # ADD . $code_root
 # RUN test -e $httpd_conf && echo "Include $httpd_conf" >> /etc/httpd/conf/httpd.conf
 
-EXPOSE 80
+EXPOSE 80 88
 RUN echo 'ServerName localhost' >> /etc/apache2/apache2.conf
 
-# CMD apachectl -D FOREGROUND
-CMD  cd /home && npm install && node /home/node_modules/.bin/nodemon /home/index.js
+#  -D FOREGROUND
+CMD  apachectl start && cd /home && npm install && npm start
