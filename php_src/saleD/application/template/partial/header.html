@@ -1,0 +1,54 @@
+<div class="container-fluid">
+    <nav class="navbar navbar-inverse row" ng-controller="collapseCtrl">
+        <!-- first row in the body -->
+        <div class="">
+            <div class="navbar-header">
+                <a class="navbar-brand" href=" "><span class="glyphicon glyphicon-home"></span>&nbsp;KRUKHMER</a>
+                <button type="button" class="navbar-toggle collapsed" ng-click="isCollapsed = !isCollapsed">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+            <div class="navbar-collapse" uib-collapse="isCollapsed">
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="info/info_product">Products</a></li>
+                    <!-- <li><a href="info/info_material">Materail</a></li> -->
+                    <!-- <li><a href="info/info_employee">Employee</a></li> -->
+                    <!-- <li><a href="sale">Sale</a></li> -->
+                    <li><a href="sale_inventory">SD Inventory</a></li>
+                    <li class="" uib-dropdown is-open="status.issale">
+                        <a id="single-button" type="button" class="" uib-dropdown-toggle ng-disabled="disabled">
+			  				SD Delivery <span class="caret"></span>
+						</a>
+                        <ul class="dropdown-menu" role="menu" aria-labelledby="single-button">
+                            <li role="menuitem"><a href="delivery/to_oms">To OMS</a></li>
+                            <li role="menuitem"><a href="delivery/oms_broken">OMS Lost</a></li>
+                            <li role="menuitem"><a href="delivery/oms_restart">OMS initial</a></li>
+                            <li role="menuitem"><a href="delivery/oms_count">OMS Count</a></li>
+                            <li class="divider"></li>
+                            <li role="menuitem"><a href="delivery/to_krung">to Krung</a></li>
+                            <li role="menuitem"><a href="delivery/krung_broken">Krung lost</a></li>
+                            <li role="menuitem"><a href="delivery/krung_restart">Krung initial</a></li>
+                            <li role="menuitem"><a href="delivery/krung_count">Krung Count</a></li>
+                            <li class="divider"></li>
+                            <li role="menuitem"><a href="delivery/SD_in">SD IN</a></li>
+                            <li role="menuitem"><a href="delivery/SD_2set">SD 2Set</a></li>
+                            <li role="menuitem"><a href="delivery/SD_2spa">SD 2Spa</a></li>
+                            <li role="menuitem"><a href="delivery/SD_restart">SD initial</a></li>
+                            <li role="menuitem"><a href="delivery/SD_lost">SD Lost</a></li>
+                            <li role="menuitem"><a href="delivery/SD_Count">SD Count</a></li>
+                        </ul>
+                    </li>
+                    <li><a ui-sref="saleNoParam">OMS Sale</a></li>
+                    <li><a ui-sref="guide_commission">Commission</a></li>
+                    <li><a href="report">Report</a></li>
+                    <li><a ui-sref="logout">log out</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</div>
+<div ui-view></div>
+<!-- Nested view Child for spa_booking/selling or booking-->

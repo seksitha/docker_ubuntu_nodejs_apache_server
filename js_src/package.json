@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "just for learning",
   "main": "index.js",
-  "scripts": { 
+  "scripts": {
     "start": "./node_modules/.bin/nodemon index.js"
   },
   "author": "",

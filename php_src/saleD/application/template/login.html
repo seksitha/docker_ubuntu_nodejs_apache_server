@@ -1,0 +1,23 @@
+
+    <div show-during-resolve><span us-spinner="{radius:8, width:4, length: 8}"></span></div>
+    <div class="box1" id='login'>
+        <div class='login-top box2'> <h3>Log In to Billing System</h3></div>
+        <div ng-show='alertLogin' class="alert alert-danger box2">Incorect Username or Password</div>
+        <div class="">&nbsp;</div>
+        <div class="panel panel-info box2">
+            <div class='panel-heading'>
+                <p class=''>Please Login</p>
+            </div>
+            <div class='panel-body'>
+                <form class=''>
+                    <label for="">Username:</label>
+                    <input class='form-control' type="text" ng-model='username' place-holer="username">
+                    <div class="row">&nbsp;</div>
+                    <label for=""> Password:</label>
+                    <input class='form-control' type="password" ng-model='password'>
+                    <div class="row">&nbsp;</div>
+                    <button class='btn btn-info btn-sm' ng-click="login(username,password)"> OK </button>
+                </form>
+            </div>
+        </div>
+    </div>

@@ -1,0 +1,131 @@
+<div id="sale" class="panel panel-default">
+    <div class=" panel-heading">
+        <div class="row">
+            <div class="col-md-3">
+                <h4>{{formName}}</h4>
+            </div>
+            <div class="col-md-8 form-inline">
+                <button class="form-control btn btn-sm btn-warning row-right" ng-click="deleteRecord(delivery.id,formName)">Delete Record</button>
+                <button class="form-control btn btn-sm btn-warning row-right" ng-click="printDelivery()">Print Delivery</button>
+            </div>
+        </div>
+    </div>
+    <div class=" panel-body">
+        <div class="row">
+            <!-- 1-row  sale information-->
+            <div class="col-md-7">
+                <div class="row form-inline row-buffer">
+                    <div class="form-group">
+                        <span class="title-auto"></span>
+                        <span class="form-control" ng-disabled="true">{{'No' + '-' + delivery.id}}</span>
+                    </div>
+                    <div class="form-group">
+                        <label class="title-auto" for="search">Employee:</label>
+                        <input style="width:160px;" type="text" ng-model="delivery.employee" class="form-control" id="search" placeholder="your name" ng-blur="updateMain(delivery)">
+                    </div>
+                    <div class="form-group">
+                        <label class="title-auto" for="search">Date:</label>
+                        <input class="form-control" uib-datepicker-popup="dd-MMM-yyyy" ng-click="open = true" is-open="open" date-picker-model style="width:160px;" ng-model="delivery.date" ng-blur="updateMain(delivery)">
+                    </div>
+                    <div class="form-group">
+                        <label class="title-auto" for="search">Notes:</label>
+                        <input style="width:160px;" type="text" ng-model="delivery.others" class="form-control" id="search" placeholder="Memo" ng-blur="updateMain(delivery)">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- table for child form -->
+        <div class="row">
+            <!-- 3-row -->
+            <div class="col-md-7 ">
+                <div class="row row-fix-height">
+                    <table class="table table-striped table-bordered table-condensed table-hover">
+                        <tr>
+                            <!-- <th>id</th> -->
+                            <!-- <th>saleID</th> -->
+                            <th>#</th>
+                            <th>Product</th>
+                            <th>CodePro</th>
+                            <th>Qty</th>
+                        </tr>
+                        <tr ng-repeat="detail in outDetail">
+                            <td ng-hide="true"><span>{{detail.id}}<span></td>
+                                <td ng-hide="true"><span>{{detail.main_id}}<span></td>
+                                <td><span class="form-contro">{{::detail.number}}</span></td>
+                            <td><span class="form-contro">{{comboId(products,detail.product)}}</span></td>
+                            <td>
+                                <input type="text" ng-model='detail.product' class="form-control" ng-blur="updateDetail(detail)">
+                            </td>
+                            <td>
+                                <input type="text" ng-model='detail.qty' class="form-control" ng-blur="updateDetail(detail)">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td style="padding-left: 2mm; font-weight: bold; " ng-model="sub">{{sub = (outDetail | subTotal:'qty')}}</td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="row row-right">
+                    <div class="col-md-12 row-right">
+                        <form class="form-inline" ng-submit="addProduct(sale.sale_id,text,text2)">
+                            <input class="form-control" style="max-width:120px;" type="text" ng-model="text" placeholder="product code">
+                            <input class="form-control" style="max-width:50px;" type="text" ng-model="text2" placeholder="Qty">
+                            <button class="form-control btn btn-primary" type="submit" id="submit" value="Submit">Submit</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row row-buffer-noline">
+            <!-- 4th row grid -->
+            <button class="btn btn-primary btn-md col-md-1" ng-click="newRow();bigCurrentPage =12">Add row</button>
+            <!-- updateState = false; addState = true; -->
+            <pre class="btn btn-default btn-md col-md-2" disabled="disabled">Page: {{bigCurrentPage}} / {{numOfPage}}</pre >
+                <uib-pagination class="pagination-md col-md-6" total-items="bigTotalItems" items-per-page = "itemPerpage"  max-size="maxSize"  boundary-links="true" rotate="true" num-pages="numOfPage" ng-model="bigCurrentPage" ng-change = "dataPaging(bigCurrentPage)" ></uib-pagination>
+
+            </div>
+        </div> <!-- div for panel body -->
+</div> <!-- div for panel -->
+
+<div class="row" id="invoice">
+    <div class='col-md-6'>
+        <div class="row">
+            <div class="col-md-5">
+                <strong>DeliverBy :</strong><strong>{{'   '+delivery.employee}}</strong>
+            </div>
+            <div class="col-md-7">
+                <strong>Date :</strong><strong>{{'   '+delivery.date}}</strong>
+            </div>
+            <div class="col-md-12">
+                <strong>{{formName}}</strong>
+            </div>
+        </div>
+        <table class="table table-striped table-bordered table-condensed table-hover">
+            <tr>
+                <!-- <th>id</th> -->
+                <!-- <th>saleID</th> -->
+                <th>#</th>
+                <th>Product</th>
+                <th>CodePro</th>
+                <th>Qty</th>
+            </tr>
+            <tr ng-repeat="detail in outDetail">
+                <td ng-hide="true"><span>{{detail.id}}<span></td>
+                    <td ng-hide="true"><span>{{detail.main_id}}<span></td>
+                    <td>{{::detail.number}}</td>
+                <td>{{comboId(products,detail.product)}}</td>
+                <td>{{detail.product}}</td>
+                <td>{{detail.qty}}</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td style="padding-left: 2mm; font-weight: bold; " ng-model="sub">{{sub = (outDetail | subTotal:'qty')}}</td>
+            </tr>
+        </table>     
+    </div>
+</div>

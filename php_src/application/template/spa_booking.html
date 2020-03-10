@@ -1,0 +1,212 @@
+<div show-during-resolve><span us-spinner="{radius:8, width:4, length: 8}"></span></div>
+<div class="panel panel-default">
+    <!-- second row in the body -->
+    <div class="panel-heading">
+        <h4 class="col-md-9">Spa Booking</h4>
+        <!-- <p>row-read, col-bule buffer gray</p> -->
+        <a class="btn btn-sm btn-danger" ng-click="deleteSale(sale)">Delete Booking</a>
+        <a class="btn btn-sm btn-warning" ui-sref="schedule">See Schedule</a>
+        <!--      <a class="btn btn-sm btn-warning" ui-sref="sale_spa_with_param({param:sale.id})" >Make Invoice <span show-during-resolve class="glyphicon glyphicon-refresh loading-icon"></span></a> -->
+        <a class="btn btn-sm btn-warning" ng-href="spa_booking/selling/{{sale.id}}">Make Invoice <span show-during-resolve class="glyphicon glyphicon-refresh loading-icon"></span></a>
+    </div>
+    <div class="panel-body" ng-animate="'animate'">
+        <div class="row">
+            <!-- 1-row  sale information-->
+            <div class="col-md-7">
+                <div class="row form-inline row-buffer">
+                    <!-- row grid sale record information -->
+                    <div class="form-group">
+                        <span class=""></span>
+                        <span class="form-control" ng-model="sale.id" ng-disabled="true">{{'No' + '-' + sale.id}}</span>
+                    </div>
+                    <div class="form-group">
+                        <span class="title-auto">Book by: </span>
+                        <input class='form-control' id='booker' ng-model="sale.book_by" type-ahead-model employ="employees" placeholder="Emoloyee Name" ng-blur="updateSale(sale,employees);" uib-typeahead="s.name as s.name for s in employees | filter:$viewValue | limitTo:8">
+                    </div>
+                    <div class="form-group">
+                        <span class="title-auto">Date Booking: </span>
+                        <input class="form-control" uib-datepicker-popup="dd-MMM-yyyy" ng-click="status.book = true" is-open="status.book" date-picker-model ng-model="sale.date_booked" ng-change="updateSale(sale)">
+                        <!--  <span class = "form-control" > {{ dateConv(sale.time) | date:'HH:mm'}}</span> -->
+                    </div>
+                    <div class="form-group">
+                        <span class="title-auto">Commission: </span>
+                        <input class='form-control' ng-model="sale.commissioner" placeholder="Sale Staff" ng-blur="updateSale(sale,employees);">
+                    </div>
+                    <div class="form-group">
+                        <span class="title-auto">$$$: </span>
+                        <input class='form-control' style="width:20px;" ng-model="sale.amount_commis" ng-blur="updateSale(sale,employees);">
+                    </div>
+                </div>
+                <div class="row row-buffer form-inline">
+                    <!-- row customer infomation -->
+                    <div class='col-md-3 row-buffer'>
+                        <div class="form-group">
+                            <span class="title-fixed-1">Customer: </span>
+                            <input class="form-control input-fixed-1" ng-model="sale.customer" ng-blur="updateSale(sale)">
+                        </div>
+                        <div class="form-group">
+                            <span class="title-fixed-1">Country: </span>
+                            <input class="form-control input-fixed-1" ng-model="sale.nationality" uib-typeahead="na for na in nationality | filter: $viewValue " ng-blur="updateSale(sale)">
+                        </div>
+                    </div>
+                    <div class="col-md-5 row-buffer">
+                        <div class="form-group">
+                            <label class="title-fixed-2">Date Treatment:</label>
+                            <input class="form-control input-fixed-2" uib-datepicker-popup="dd-MMM-yyyy" ng-click="status.opened =true" is-open="status.opened" date-picker-model ng-model="sale.date_treatment" ng-change="updateSale(sale)" ng-model-options="{allowInvalid:ture}">
+                        </div>
+                        <div class="form-group">
+                            <label class="title-fixed-2">Time Start:</label>
+                            <input class="form-control input-fixed-2" time-model type='time'  ng-model="sale.time_start" placeholder="HH:mm:ss" ng-blur="updateSale(sale)" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="title-fixed-2">Time Finish:</label>
+                            <input class="form-control input-fixed-2" time-model type='time'  ng-model="sale.time_end"  placeholder="HH:mm:ss" ng-blur="updateSale(sale)" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="title-fixed-2">Room Treatment:</label>
+                            <input class="form-control input-fixed-2" ng-model="sale.room_treat" ng-blur="updateSale(sale)">
+                        </div>
+                    </div>
+                    <div class='col-md-4 row-buffer'>
+                        <div class="form-group">
+                            <label class="title-fixed-2">Time Pickup:</label>
+                            <input class="form-control input-fixed-1" time-model type='time'  ng-model="sale.time_pickup" placeholder="HH:mm:ss" ng-blur="updateSale(sale)" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="title-fixed-2">Location Pickup:</label>
+                            <input class="form-control input-fixed-1 " ng-model="sale.location_pickup" ng-blur="updateSale(sale)">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <!-- row sale detail table-->
+                    <div class="col-md-12">
+                        <div class=" row row-fix-height">
+                            <table class="table table-striped table-bordered table-condensed table-hover">
+                                <tr>
+                                    <!-- <th>id</th> -->
+                                    <!-- <th>saleID</th> -->
+                                    <th>#</th>
+                                    <th>Code</th>
+                                    <th>Product</th>
+                                    <th>Qty</th>
+                                    <th>Price</th>
+                                    <th>Discount</th>
+                                    <!-- <th>Therapist</th> -->
+                                    <th>subtotal</th>
+                                    <th>editRecord</th>
+                                </tr>
+                                <tr ng-repeat="detail in saleDetail">
+                                    <td ng-hide="true"><span editable-text="detail.id" e-form="rowform" e-name="id">{{detail.id}}<span></td>
+                                    <td ng-hide="true"><span editable-text="detail.main_id" e-form="rowform" e-name= "main_id">{{detail.main_id}}<span></td>
+                                    <td><span editable-text="detail.number" e-form="rowform" e-name= "number">{{detail.number}}<span></td>
+                                    <td><span editable-text="detail.product" e-form="rowform" e-name= "product">{{detail.product}}<span> </td>
+                                    <td><span e-name= "productName">{{comboId(products, detail.product)}}<span> </td>
+                                    <td><span editable-text="detail.qty" e-form="rowform" e-name= "qty">{{detail.qty}}<span> </td>
+                                    <td><span editable-text="detail.price" e-form="rowform" e-name= "price">{{detail.price | currency}}<span> </td>
+                                    <td><span editable-text="detail.discount"  e-form="rowform" e-name= "discount">{{detail.discount|percentage:2}} <span></td>
+                                    <td><span e-form="rowform" e-name= "subtotal">{{detail.qty*(detail.price*(100-detail.discount)/100)|currency}} <span></td>
+                                    <td> <!-- edit colum -->
+                                        <form editable-form name="rowform" onbeforesave="updateDetail(rowform.$data,products,$index)"  ng-show="rowform.$visible" class="form-inline" shown= 'false'>
+                                            <!-- update confirm -->
+                                            <button type="submit" ng-show="updateState" class="btn-default btn btn-xs form-group"><span class="glyphicon glyphicon-ok"></span></button>
+                                            <!-- Update cancel -->
+                                            <button type="button" ng-show="updateState" class="btn-default btn btn-xs form-group" ng-click="rowform.$cancel()"><span class="glyphicon glyphicon-remove"></span></button>
+                                        </form>
+                                        <div class="buttons" ng-show="!rowform.$visible">
+                                            <!-- edit record -->
+                                            <button class="btn btn-default btn-xs" ng-click="rowform.$show(); addState = false; updateState = true"><span class="glyphicon glyphicon-edit"></span></button>
+                                            <!-- delete record -->
+                                            <button type="button" class="btn btn-danger btn-xs" ng-click="deleteDetail($index,saleDetail,detail)"><span class="glyphicon glyphicon-remove"></span></button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td style="padding-left: 2mm; font-weight: bold; " ng-model="sub">{{sub = (saleDetail | totalSumPriceQty:'price':'discount':'qty') | currency}}</td>
+                                    <td></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 col-right row-right">
+                        <form class="form-inline row-right" ng-submit="addProduct(saleDetails,saleDetail,sale.id,products,barcode)">
+                            <input class="form-control" style="max-width:120px;" type="text" ng-model="barcode" placeholder="Menue">
+                            <!-- <input class="form-control" style="max-width:120px;"type="text" ng-model ="therapist" placeholder="Therapist" > -->
+                            <button class="form-control btn btn-primary" type="submit" id="submit" value="Submit">Submit</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-5">
+                <div class="row row-buffer">
+                    <div class="col-md-12 col-II">
+                        <div class="row  row-fix-height ">
+                            <h5>Therapist Records</h5>
+                            <table class="table table-striped table-bordered table-condensed table-hover">
+                                <tr>
+                                    <!-- <th>id</th> -->
+                                    <!-- <th>saleID</th> -->
+                                    <th>#</th>
+                                    <th>code</th>
+                                    <th>Therapist</th>
+                                    <th>Duraion(minut)</th>
+                                    <th>Edit</th>
+                                </tr>
+                                <tr ng-repeat="commission in commissions">
+                                    <td ng-hide="true"><span editable-text="detail.id" e-form="rowform" e-name="id">{{comission.id}}<span></td>
+                                    <td ng-hide="true"><span editable-text="detail.sale_id" e-form="rowform" e-name= "sale_id">{{commission.main_id}}<span></td>
+                                    <td><span editable-text="commission.number" e-form="rowform" e-name= "number">{{commission.number}}<span></td>
+                                    <td><span editable-text="commission.therapist" e-form="rowform" e-name= "therapist">{{commission.therapist}}<span> </td>
+                                    <td ><span >{{comboId(employees,commission.therapist)}}<span></td>
+                                    <td class='cell-right'><span editable-text="commission.duration" e-form="rowform" e-name= "duration">{{commission.duration}}<span> </td>
+
+                                    <td> <!-- edit colum -->
+                                        <form editable-form name="rowform" onbeforesave="updateGift(rowform.$data)"  ng-show="rowform.$visible" class="form-buttons form-inline" shown= 'false'>
+                                          <!-- update confirm -->
+                                            <button type="submit" ng-show="updateState" class="btn-default btn btn-xs"><span class="glyphicon glyphicon-ok"></span></button>
+                                              <!-- Update cancel -->
+                                            <button type="button" ng-show="updateState" class="btn-default btn btn-xs" ng-click="rowform.$cancel()"><span class="glyphicon glyphicon-remove"></span></button>
+                                        </form>
+                                      <!-- edit record -->
+                                        <div class="buttons" ng-show="!rowform.$visible">
+                                            <button class="btn btn-default btn-xs" ng-click="rowform.$show(); addState = false; updateState = true"><span class="glyphicon glyphicon-edit"></span></button>
+                                        <!-- delete record -->
+                                            <button type="button" class="btn btn-danger btn-xs" ng-click="deleteComis($index,commissions,commission)"><span class="glyphicon glyphicon-remove"></span></button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <!-- input therapist and hour of working -->
+                        <div class="col-md-12 row-right">
+                            <form class="form-inline row-right" ng-submit="addCommission(commissions,sale.id,employees,therapist, duration)">
+                                <input class="form-control" style="max-width:120px;" type="text" ng-model="therapist" placeholder="Therapist here">
+                                <input class="form-control" style="max-width:120px;" type="text" ng-model="duration" placeholder="Duration here">
+                                <button class="form-control btn btn-primary" type="submit" id="submit" value="Submit">Submit</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row row-buffer-noline">
+            <!-- row grid pagination -->
+            <button class="btn btn-primary btn-md col-md-1" ng-click="newRow(bigTotalItems, main);bigCurrentPage =12">Add New</button>
+            <!-- updateState = false; addState = true; -->
+            <pre class="btn btn-default btn-md col-md-2" disabled="disabled">Page: {{bigCurrentPage}} / {{numOfPage}}</pre >
+              <uib-pagination class="pagination-md col-md-6" total-items="bigTotalItems" items-per-page = "itemPerpage"  max-size="maxSize"  boundary-links="true" rotate="true" num-pages="numOfPage" ng-model="bigCurrentPage" ng-change = "dataPaging(bigCurrentPage,main)" >
+          </uib-pagination>
+        </div>
+    </div> <!-- div for panel body -->
+</div> <!-- div for panel -->

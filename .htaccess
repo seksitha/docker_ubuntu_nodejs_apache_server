@@ -1,0 +1,23 @@
+# Do not remove this line or mod_rewrite rules and search engine friendly URLs will stop working
+
+RewriteEngine on
+
+RewriteBase /
+
+# -s is reqular file with size
+RewriteCond %{REQUEST_FILENAME} -s [OR]
+# -l is the link that refer to file
+RewriteCond %{REQUEST_FILENAME} -l [OR]
+# -d is directory
+RewriteCond %{REQUEST_FILENAME} -d
+
+RewriteRule ^.*$ - [NC,L] # L if it is match it will stop
+
+# this is the last rule to hit
+RewriteRule ^(.*) index.php [NC,L]
+
+
+
+
+
+

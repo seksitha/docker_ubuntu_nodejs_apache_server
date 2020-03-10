@@ -1,0 +1,70 @@
+<div show-during-resolve><span us-spinner="{radius:8, width:4, length: 8}"></span></div>
+<div class="panel panel-default">
+    <div class=" panel-heading">
+        <h4 class="col-md-4">{{formName}}</h4>
+        <div class="form-inline col-md-offset-9">
+            <label for="search">Search</label>
+            <input type="text" ng-model="myfilter" ng-keypress="bigCurrentPage = 1 ; filterStart = 0" class="form-control" id="search" placeholder="Search {{formName}}...">
+        </div>
+    </div>
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-md-{{classLength}} table-responsive">
+                <table class="table table-striped table-bordered table-condensed table-hover">
+                    <thead>
+                        <tr>
+                            <th ng-repeat="(key, val) in datas[0]">{{key | capitalize}} </th>
+                            <th> <span class="glyphicon glyphicon-edit"></span> </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="data in datas | filter: myfilter | startFrom: filterStart | limitTo: itemPerpage">
+                            <td ng-repeat="(key, val) in data" style="padding:2px">
+                                <span editable-text='val' e-name="{{key}}" e-form="rowform">{{val}}<span>
+                            </td>
+                            <td style="white-space: nowrap">
+                                <form editable-form name="rowform" onbeforesave="update(rowform.$data)"  ng-show="rowform.$visible" class="form-buttons form-inline" shown= "inserted == data">
+                                    <!-- update -->
+                                    <button type="submit" ng-show="updateState" class="btn-default btn btn-xs">
+                                        <span class="glyphicon glyphicon-ok"></span>
+                                </button>
+                                <!-- cancel update -->
+                                <button type="button" ng-show="updateState" class="btn-default btn btn-xs" ng-click="rowform.$cancel()">
+                                    <span class="glyphicon glyphicon-remove"></span>
+                                </button>
+                                <!-- addrow confirm -->
+                                <button type="button" ng-show="addState" class="btn-default btn btn-xs" ng-click="addRow(rowform.$data,$index); rowform.$hide()">
+                                    <span class="glyphicon glyphicon-ok"></span>
+                                </button>
+                                <!-- cancel adding -->
+                                <button type="button" ng-show="addState" class="btn-default btn btn-xs" ng-click="cancel(rowform.$data,$index)">
+                                    <span class="glyphicon glyphicon-remove"></span>
+                                </button>
+                                </form>
+                                <div class="buttons" ng-show="!rowform.$visible">
+                                    <!-- edit record -->
+                                    <button class="btn btn-default btn-xs" ng-click="rowform.$show(); addState = false; updateState = true">
+                                        <span class="glyphicon glyphicon-edit"></span>
+                                    </button>
+                                    <!-- delete record -->
+                                    <!-- <button class="btn btn-danger btn-xs" ng-click="remove(itemPerpage*(bigCurrentPage-1)+$index,data.id)" ng-disabled ="myfilter"><span class="glyphicon glyphicon-remove"></span></button>  -->
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <button class="btn btn-primary btn-md col-md-1" ng-click="newRow(); updateState = false; addState = true;">Add row</button>
+                    <button href="#/add_data" class="btn btn-primary btn-md col-md-1" ng-click="doneAdd()">Done</button>
+                    <pre class="btn btn-default btn-md col-md-2" disabled="disabled">Page: {{bigCurrentPage}} / {{numOfPage}}</pre >
+                        <pagination total-items="bigTotalItems" items-per-page = "itemPerpage" ng-model="bigCurrentPage" max-size="maxSize" class="pagination-md col-md-8" boundary-links="true" rotate="true" num-pages="numOfPage" ng-change = "setFilterStart()" >
+
+                        </pagination>
+                    </div>
+                </div>
+            </div>
+        </div>
+            
+        </div>

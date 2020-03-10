@@ -7,12 +7,12 @@ services:
     build: . # build from Docker file not from image
     ports:
       - 8800:88 #ex:in
-      - 8811:80
+      - 8811:8080
     volumes:
-      - ./js_src/:/home/
-      - ./php_src:/var/www/html/
-      - ./libs/:/etc/apache2/conf.d/
-      - ./libs/:/var/log/apache2/
+      # - ./js_src/:/
+      - ./php_src:/app
+      - ./libs/apache:/etc/apache2/
+      - ./libs/apache:/var/log/apache2/
     tty: true
     links: 
       - database

@@ -1,0 +1,107 @@
+<div show-during-resolve><span us-spinner="{radius:8, width:4, length: 8}"></span></div>
+<div class="panel panel-default">
+    <div class=" panel-heading">
+        <div class="row ">
+            <h4 class="col-md-1">Inventory</h4>
+            <div class="col-md-8 form-inline">
+                <div class="row-right">
+                    <input placeholder='From ID' ng-model='fromId' type="text" class="form-control ">
+                    <input placeholder='To ID' ng-model='toId' type="text" class="form-control ">
+                    <botton class="btn btn-warning btn-xs " ng-click="copyStock(fromId,toId)">Copy</botton>
+                    <input placeholder='idToInsert' ng-model='mainId' type="text" class="form-control">
+                    <input placeholder='fieldToCorrect' ng-model='field' type="text" class="form-control ">
+                    <input placeholder='passWord' ng-model='passWord' type="password" class="form-control ">
+                    <botton class="btn btn-warning btn-xs " ng-click="correctStock(mainId,field,passWord)">OK</botton>
+                </div>
+            </div>
+            <div class="form-inline col-md-3 row-right">
+                <label></label>
+                <input style="width:100px;" type="text" ng-model="myfilter" class="form-control" placeholder="Filter by Source">
+                <label></label>
+                <input style="width:100px;" type="text" ng-model="myCat" class="form-control" placeholder="Filter by Category">
+                <a href="#" ng-click="orderByField = ''; myfilter =''; myCat=''">
+                    <span class="glyphicon glyphicon-glass"></span>
+                    <span class="glyphicon glyphicon-remove"></span>
+                </a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+
+                <div class=" row-right form-inline">
+
+                    <label for="search">Check Sales&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                    <label for="search">DateStart:</label>
+                    <input type="text" class="form-control" datepicker-popup="dd-MMM-yyyy" ng-model="dateStart" ng-click="status.opened = true" is-open="status.opened" />
+                    <label for="search">DateEnd:</label>
+                    <input type="text" class="form-control" datepicker-popup="dd-MMM-yyyy" ng-model="dateEnd" ng-click="opened = true" is-open="opened" />
+                    <button class="btn btn-primary btn-sm" ng-click="getInv(dateStart,dateEnd)">Calculate</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class=" panel-body">
+        <div class="row">
+            <div class="col-md-3">
+                <div>Inventory initial date is {{lastStartStock | date:'dd-MMM-yyyy'}}</div>
+            </div>
+            <div class="col-md-9">
+                <button class='btn btn-xs btn-info row-right' ng-click="hideSaleD(20)">HideSaleD</button>
+                <button class='btn btn-xs btn-info row-right' ng-click="hideShop(19,4)">HideShop</button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="table-responsive">
+                    <table id='inventory' class="table table-striped table-bordered table-condensed table-hover">
+                        <thead>
+                            <tr>
+                                <th ng-repeat="(key, val) in datas[0]">
+                                    <a href="#" ng-click=" showField(key)">{{key}}
+                                <span ng-show="orderByField == key">
+                                    <span ng-show="!reverseSort" class="glyphicon glyphicon-triangle-top"></span>
+                                    <span ng-show="reverseSort" class="glyphicon glyphicon-triangle-bottom"></span>
+                                </span>
+                            </a>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="data in datas | filter:{source: myfilter, category:myCat} | orderBy:orderByField:reverseSort">
+                                <!-- <td ng-repeat = "(key, val) in data" style="padding:2px">{{val}}</td>  -->
+                                <td class>{{data.id}}</td>
+                                <td class>{{data.name}}</td>
+                                <td class>{{data.category}}</td>
+                                <td class>{{data.source}}</td>
+                                <td class="inventory-oms">{{data.OIN}}</td>
+                                <td class="inventory-oms">{{data.OS}}</td>
+                                <td class="inventory-oms">{{data.OG}}</td>
+                                <td class="inventory-oms">{{data.OL}}</td>
+                                <td class="inventory-oms">{{data.OA}}</td>
+                                <td class="inventory-oms">{{data.OC}}</td>
+                                <td class="inventory-oms">{{data.OCom}}</td>
+                                <td class="inventory-krung">{{data.KIN}}</td>
+                                <td class="inventory-krung">{{data.KS}}</td>
+                                <td class="inventory-krung">{{data.KG}}</td>
+                                <td class="inventory-krung">{{data.KL}}</td>
+                                <td class="inventory-krung">{{data.KA}}</td>
+                                <td class="inventory-krung">{{data.KC}}</td>
+                                <td class="inventory-krung">{{data.KCom}}</td>
+                                <td class="inventory-total">{{data.TS}}</td>
+                                <td>{{data.SIN}}</td>
+                                <td>{{data['Set']}}</td>
+                                <td>{{data['Spa']}}</td>
+                                <td>{{data['WS']}}</td>
+                                <td>{{data.SDL}}</td>
+                                <td>{{data.SA}}</td>
+                                <td>{{data.SDC}}</td>
+                                <td>{{data.SDCom}}</td>
+                                <td class="inventory-total">{{data.TA}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

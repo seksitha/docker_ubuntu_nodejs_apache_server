@@ -1,12 +1,10 @@
-FROM ubuntu:latest
+FROM bitnami/apache
+LABEL maintainer "Bitnami <containers@bitnami.com>"
 
-RUN apt-get update
-RUN apt-get install -y systemd
-
-RUN DEBIAN_FRONTEND="noninteractive" apt-get -y install tzdata
-RUN apt-get install -y apache2
-RUN apt-get install -y \
-    php \
+## Install 'vim'
+USER 0 
+# Required to perform privileged actions
+RUN install_packages php \
     php-cli \
     php-gd \
     php-mbstring \
@@ -15,15 +13,15 @@ RUN apt-get install -y \
     php-xml \
     php-xdebug \
     # phpmyadmin \
-    nodejs
-RUN apt-get install -y npm 
-# RUN sed -i -e "s|^;date.timezone =.*$|date.timezone = Asia/Phnom Penh|" /etc/php.ini
+    nodejs \
+    npm 
+USER 1001 
+# Revert to the original non-root user
 
-# ADD . $code_root
-# RUN test -e $httpd_conf && echo "Include $httpd_conf" >> /etc/httpd/conf/httpd.conf
-
-EXPOSE 80 88
-RUN echo 'ServerName localhost' >> /etc/apache2/apache2.conf
+EXPOSE 8080 88
 
 #  -D FOREGROUND
-CMD  apachectl start && cd /home && npm install && npm start
+# USER 0
+# CMD  cd /home && npm install && npm start
+# USER 1001 
+USER 1002

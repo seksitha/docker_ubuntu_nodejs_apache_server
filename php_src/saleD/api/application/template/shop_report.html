@@ -1,0 +1,135 @@
+<div show-during-resolve><span us-spinner="{radius:8, width:4, length: 8}"></span></div>
+<div class="panel panel-default">
+    <div class=" panel-heading">
+        <div class="row">
+            <div class="col-md-2">
+                <h4>Sale Report</h4>
+            </div>
+            <div class="col-md-2 row-right">
+                <a class="btn btn-sm btn-info" ui-sref="download_report">Download Report</a>
+            </div>
+        </div>
+    </div>
+    <div class=" panel-body">
+        <div class='row'>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="panel panel-info">
+                    <div class="panel-heading"> Report Commands</div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p class="tbold">Report Peroid</p>
+                                <select class="form-control" name="sometext" size="3" ng-model="reportPeroid">
+                                    <option value="daily">Daily</option>
+                                    <option value="peroid">Peroid</option>
+                                    <option value="monthly">Monthly</option>
+                                    <!-- <option value="anually">anually</option> -->
+                                </select>
+                                <p class="tbold">&nbsp;</p>
+                                <p class="tbold">Term filter</p>
+                                <input class="form-control" uib-datepicker-popup="yyyy-MMM-dd" ng-click="start = true" is-open="start" ng-model="startDate" placeholder="Date Start">
+                                <input ng-show="reportPeroid == 'peroid'" class="form-control" uib-datepicker-popup="yyyy-MMM-dd" ng-click="start1 = true" is-open="start1" ng-model="endDate" placeholder="Date End">
+                            </div>
+                        </div>
+                        <div class="row">&nbsp;</div>
+                        <div class="row">
+                            <div class="col-md-12 cell-right">
+                                <button class="btn btn-sm btn-info" ng-click="getReport(startDate,endDate)"> OK</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class='col-md-12'>
+                <uib-tabset active="activeJustified">
+                    <uib-tab index="0" heading="Sale Report" classes='well'>
+                        <div class='row'>
+                            <div class=" col-md-3 table-responsive">
+                                <h5>OMS monthly sale report</h5>
+                                <table class="table table-striped table-bordered table-condensed table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th ng-repeat="(key, val) in omsSales[0]">{{key}}</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="omsSale in omsSales">
+                                            <td style="padding:2px;">{{(omsSale[ 'date sale' ])}}</td>
+                                            <td style="padding:2px;text-align:right;">{{omsSale.sale| currency}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td></td>
+                                            <td style="padding-left: 2mm; font-weight: bold;text-align:right;">{{(omsSales | subTotal:'sale'|currency)}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="col-md-3 table-responsive">
+                                <h5>Krung monthly sale report</h5>
+                                <table class="table table-striped table-bordered table-condensed table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th ng-repeat="(key, val) in krungSales[0]">{{key}}</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="krungSale in krungSales">
+                                            <td style="padding:2px">{{(krungSale[ 'date sale' ])}}</td>
+                                            <td style="padding:2px; text-align:right;">{{krungSale.sale| currency}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td></td>
+                                            <td style="padding-left: 2mm; font-weight: bold;text-align:right; ">{{(krungSales | subTotal: 'sale' | currency)}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class='col-md-2'>
+                                <h5> OMS + Krung = {{((krungSales | subTotal: 'sale') + (omsSales | subTotal:'sale'))| currency}}</h5>
+                            </div>
+                        </div>
+                    </uib-tab>
+                    <uib-tab index="1" heading="Sale History">
+                        <div class='row'>
+                            <div class='col-md-6 '>
+                                <h4>OMS anual sale</h4>
+                                <p>Y:(Sale in USD)&nbsp;&nbsp;&nbsp;&nbsp;X:(month) </p>
+                                <canvas id="line" chart chart-line chart-data="dataOmsAnualSale" chart-labels="labelOmsAnualSale" chart-legend="true" chart-series="serieOmsAnualSale">
+                                </canvas>
+                            </div>
+                            <div class='col-md-6 '>
+                                <h4>Sale Compare between years</h4>
+                                <p>Y:(Sale in USD)&nbsp;&nbsp;&nbsp;&nbsp;X:(month) </p>
+                                <canvas id="line1" chart chart-line chart-data="dataSaleCompareBetweenYear" chart-labels="labelSaleCompareBetweenYear" chart-legend="true" chart-series="serieSaleCompareBetweenYear">
+                                </canvas>
+                            </div>
+                        </div>
+                        <div calss='row'>
+                            <div class='col-md-6 '>
+                                <h4>This Year Sale Trend</h4>
+                                <p>Y:(Sale in USD)&nbsp;&nbsp;&nbsp;&nbsp;X:(month) </p>
+                                <canvas id="line1" chart chart-line chart-data="dataThisYearTrend" chart-labels="labelThisYearTrend" chart-legend="true" chart-series="serieThisYearTrend">
+                                </canvas>
+                            </div>
+                            <div class='col-md-6 '>
+                                <h4>Last Year Sale Trend</h4>
+                                <p>Y:(Sale in USD)&nbsp;&nbsp;&nbsp;&nbsp;X:(month) </p>
+                                <canvas id="line1" chart chart-line chart-data="lastYearTrendData" chart-labels="lastYearTrendLabel" chart-legend="true" chart-series="lastYearTrendSeries">
+                                </canvas>
+                            </div>
+                        </div>
+                        <div calss='row'>
+                            <div class='col-md-6 '>
+                                <h4>Sale(usd) per category</h4>
+                                <p>Y:(Sale in USD)&nbsp;&nbsp;&nbsp;&nbsp;X:(month) </p>
+                                <canvas id="radar" chart chart-pie chart-data="dataSaleCategory" chart-labels="labelSaleCategory"></canvas>
+                            </div>
+                        </div>
+                    </uib-tab>
+                </uib-tabset>
+            </div>
+        </div>
+    </div>
+</div>

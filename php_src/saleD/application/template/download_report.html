@@ -1,0 +1,47 @@
+<div ng-show="showSpiner"><span us-spinner="{radius:8, width:4, length: 8}"></span></div>
+
+<div class="col-md-4 col-md-offset-4">
+    <div class="panel panel-info">
+        <div class="panel-heading"><strong>Download Report</strong></div>
+        <div class="panel-body">
+            <div class=" row">
+                <div class="col-md-6">
+                    <p class="tbold">SHOP</p>
+                    <select class="form-control" name="sometext" size="4" ng-model="shop">
+                        <option value="oms_sale">OMS</option>
+                        <option value="spa_sale_product">Spa Product</option>
+                        <option value="spa_sale_massage">Spa Massage</option>
+                        <option value="krung_sale">Krung</option>
+                        <!-- <option value="peroidly">Peroidly</option> -->
+                    </select>
+                </div>
+                <div class="col-md-6">
+                    <p class="tbold">Report Type</p>
+                    <select class="form-control" name="sometext" size="2" ng-model="reportType">
+                        <option value="customer">Customer</option>
+                        <option value="product">Product</option>
+                        <!-- <option value="peroidly">Peroidly</option> -->
+                    </select>
+                </div>
+            </div>
+            <br>
+            <div class=" row">
+                <div class="col-md-6">
+                    <p class="tbold">Date Start</p>
+                    <input class='form-control' type=date placeholder="Date Start" ng-model="dateStart">
+                </div>
+                <div class="col-md-6">
+                    <p class="tbold">Date End</p>
+                    <input class='form-control' type=date placeholder="Date End" ng-model="dateEnd">
+                </div>
+            </div>
+            <br>
+            <div class=" row">
+                <div class="col-md-3 row-right">
+                    <a class=' download'  ng-csv="data" csv-header="getHeader()" filename="{{'report'+'_'+shop+'_'+reportType+'_'+start+'-'+end}}"  ></a>
+                    <a href=""class='btn btn-primary btn-xs' ng-click="downloadReport()">Download</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,286 @@
+<div id="sale" class="panel panel-default">
+    <div class="panel-heading ">
+        <div class="row ">
+            <div class="col-md-5 col-md-offset-1">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h5>Check, Edit and Submit Commission List</h5>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 form-inline">
+                        <button class="btn btn-sm btn-danger form-control" ng-disabled="!datas.length" ng-click="submitCommission(term)">Submit Edit</button>
+                        <input type="text" placeholder="Input Date" class=" form-control" uib-datepicker-popup="dd-MMM-yyyy" ng-model="term" ng-click="status.opened = true" is-open="status.opened" />
+                        <button class=" btn btn-sm btn-info form-control" ng-click="getEditCommission(term)">Go</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="row">
+                    <div class="col-md-4">
+                        <h5>Payment and Report</h5>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 form-inline">
+                        <span class="glyphicon glyphicon-align-justify"></span>
+                        <button class="btn btn-sm btn-warning form-control" ng-click="getListCommission(term)">Commission List</button>
+                        <span class=""></span>
+                        <span class="glyphicon glyphicon-align-justify"></span>
+                        <input type="text" class="guide_phone form-control" ng-model="guide_phone" placeholder="Guide Phone Number" phone-format/>
+                        <button class=" btn btn-sm btn-warning form-control" ng-click="searchPrintCommission(guide_phone)">Payment</button>
+                        <span class="glyphicon glyphicon-align-justify"></span>
+                        <input type="text" placeholder="Input Date" class="form-control" uib-datepicker-popup="dd-MMM-yyyy" ng-model="term1" ng-click="status.opened2 = true" is-open="status.opened2" />
+                        <button class=" btn btn-sm btn-warning form-control" ng-click="getCommissionReport(term1)">Report</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- edit guide commission form -->
+    <div class="panel-body">
+        <div class="table-responsive">
+            <strong ng-show="datas.length>0"> Editing Guide Commission : {{term|date:'MMMM-yy'}}</strong>
+            <table class="table table-striped table-bordered table-condensed table-hover">
+                <thead>
+                    <tr>
+                        <th ng-repeat="(key, val) in datas[0]">{{key | capitalize}} </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="data in datas">
+                        <td ng-repeat="(key, val) in data" style="padding:2px">
+                            <input class="{{::key}} form-control" ng-disabled="disabled[key]" type='text' ng-model="data[key]" ng-blur="updateGuide(data)" phone-format>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <!-- total Guide commission list for calling -->
+        <div class="table-responsive col-md-6" ng-show="totalCommissions.length>0">
+            <strong ng-show="totalCommissions.length>0"> Total Guide Commission list until {{commissionLastAdd|date:'MMMM-yyyy'}}</strong>
+            <span ng-show="totalCommissions.length>0" class="btn btn-warning btn-sm row-right" ng-click="print()">Print Report</span>
+            <table class="table table-striped table-bordered table-condensed table-hover">
+                <thead>
+                    <tr>
+                        <th ng-repeat="(key, val) in totalCommissions[0]">{{key | capitalize}} </th>
+                        <th >Delete</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="data in totalCommissions" ng-model="data" span-format>
+                        <td ng-repeat="(key, val) in data" style="padding:2px">
+                            <span class="{{key}}">{{data[key]}}</span>
+                        </td>
+                        <td><span class="glyphicon glyphicon-remove btn btn-xs btn-danger" ng-click='deleteCommission(data.guide_phone,totalCommissions,$index)'></span></td>
+                    </tr>
+                    <tr ng-show="totalCommissions.length>0">
+                        <td></td>
+                        <td class='amount'>{{(totalCommissions | subTotal:'amount') | currency}}</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="table-responsive col-md-4" ng-show="totalCommissions.length>0">
+            <span ng-show="outStandingCommission.length>0" class="btn btn-warning btn-sm" ng-click="print()">Outstanding Commission Per Month</span>
+            <table class="table table-striped table-bordered table-condensed table-hover">
+                <thead>
+                    <tr>
+                        <th ng-repeat="(key, val) in outStandingCommission[0]">{{key | capitalize}} </th>
+                    
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="data in outStandingCommission" >
+                        <td ng-repeat="(key, val) in data" style="padding:2px">
+                            <span class="{{key}}">{{data[key]}}</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td class='amount'>{{( outStandingCommission | subTotalNoDollar:'amount') | currency}}</td>
+                      
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="table-responsive col-md-4" ng-show="totalCommissions.length>0">
+            <span ng-show="outStandingCommissionYearly.length>0" class="btn btn-warning btn-sm" ng-click="print()">Outstanding Commission Per Year</span>
+            <table class="table table-striped table-bordered table-condensed table-hover">
+                <thead>
+                    <tr>
+                        <th ng-repeat="(key, val) in outStandingCommissionYearly[0]">{{key | capitalize}} </th>
+                    
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="data in outStandingCommissionYearly">
+                        <td ng-repeat="(key, val) in data" style="padding:2px">
+                            <span class="{{key}}">{{data[key]}}</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td class='amount'>{{( outStandingCommissionYearly | subTotalNoDollar:'amount') | currency}}</td>
+                      
+                        
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="row" ng-show="searchCommission.length>0">
+            <div class="col-md-6">
+                <div class="table-responsive col-md-12">
+                    <strong ng-show="searchCommission.length>0">Commission to tour guide: {{guide_phone|phoneFormat}}</strong>
+                    <span ng-show="searchCommission.length>0" class="btn btn-warning btn-sm row-right" ng-click="printCommission(searchCommission)">Print</span>
+                    <table class="table table-striped table-bordered table-condensed table-hover">
+                        <thead>
+                            <tr>
+                                <th ng-repeat="(key, val) in searchCommission[0]" ng-hide="hide[key]">{{key | capitalize}} </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="data in searchCommission " ng-model='data' span-format>
+                                <td ng-repeat="(key, val) in data" style="padding:2px" ng-hide="hide[key]">
+                                    <span class="{{key}}">{{val}}</span>
+                                </td>
+                            </tr>
+                            <tr ng-show="searchCommission.length>0">
+                                <td></td>
+                                <td></td>
+                                <td class='amount'>{{(searchCommission | subTotal:'amount') | currency}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <strong>Signature Guide</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>Signature Staff</strong>
+                </div>
+            </div>
+        </div>
+        <!-- Commission Report end of the month -->
+        <div class="table-responsive col-md-6" ng-show="commissionReport.length>0">
+            <strong ng-show="commissionReport.length>0">Report Guide Commission : {{term1|date:'MMMM-yyyy'}}</strong>
+            <span ng-show="commissionReport.length>0" class="btn btn-warning btn-sm row-right" ng-click="print()">Print Report</span>
+            <table class="table table-striped table-bordered table-condensed table-hover">
+                <thead>
+                    <tr>
+                        <th ng-repeat="(key, val) in commissionReport[0]">{{key | capitalize}} </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="data in commissionReport " ng-model='data' span-format>
+                        <td ng-repeat="(key, val) in data" style="padding:2px">
+                            <span class="{{key}}">{{val}}</span>
+                        </td>
+                    </tr>
+                    <tr ng-show="commissionReport.length>0">
+                        <td></td>
+                        <td></td>
+                        <td class='amount'>{{(commissionReport | subTotal:'amount') | currency}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <!-- <span class="form-control">{{0123455665|phoneFormat}}</span> -->
+    </div>
+</div>
+<!-- 
+* from here is dom for printing
+*
+*
+*
+ -->
+<!-- Total commission list for calling guide -->
+<div id="invoice" class="row">
+    <div class="col-md-9" ng-show="totalCommissions.length>0">
+        <div class="table-responsive col-md-12">
+            <strong ng-show="totalCommissions.length>0"> Total Guide Commission list for Calling : Date Printed : {{now|date:'dd-MMM-yyyy'}}</strong>
+            <table class="table table-striped table-bordered table-condensed table-hover">
+                <thead>
+                    <tr>
+                        <th ng-repeat="(key, val) in totalCommissions[0]">{{key | capitalize}} </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="data in totalCommissions " ng-model='data' span-format>
+                        <td ng-repeat="(key, val) in data" style="padding:2px">
+                            <span class="{{key}}">{{val}}</span>
+                        </td>
+                    </tr>
+                    <tr ng-show="totalCommissions.length>0">
+                        <td></td>
+                        <td class='amount'>{{(totalCommissions | subTotal:'amount') | currency}}</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<!-- invoice for indevidule guide -->
+<div id="invoice" class="row" ng-show="searchCommission.length>0">
+    <div id="printCommission">
+        <div class="col-md-12">
+            <div class="table-responsive col-md-12">
+                <strong ng-show="searchCommission.length>0">Commission to tour guide: {{guide_phone|phoneFormat}}</strong>
+                <table class="table table-striped table-bordered table-condensed table-hover">
+                    <thead>
+                        <tr>
+                            <th ng-repeat="(key, val) in searchCommission[0]" ng-hide="hide[key]">{{key | capitalize}} </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="data in searchCommission " ng-model='data' span-format>
+                            <td ng-repeat="(key, val) in data" style="padding:2px" ng-hide="hide[key]">
+                                <span class="{{key}}">{{val}}</span>
+                            </td>
+                        </tr>
+                        <tr ng-show="searchCommission.length>0">
+                            <td></td>
+                            <td></td>
+                            <td class='amount'>{{(searchCommission | subTotal:'amount') | currency}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <strong>Signature Guide</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>Signature Staff</strong>
+                <p>.</p>
+                <p>.</p>
+                <p>.Thank you! See you again soon</p>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- report guide commission -->
+<div id="invoice" class="row">
+    <div class="col-md-9" ng-show="commissionReport.length>0">
+        <div class="table-responsive col-md-12">
+            <strong ng-show="commissionReport.length>0">Report Guide Commission: {{now|date:'dd-MMMM-yyyy'}}</strong>
+            <table class="table table-striped table-bordered table-condensed table-hover">
+                <thead>
+                    <tr>
+                        <th ng-repeat="(key, val) in commissionReport[0]">{{key | capitalize}} </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="data in commissionReport " ng-model='data' span-format>
+                        <td ng-repeat="(key, val) in data" style="padding:2px">
+                            <span class="{{key}}">{{val}}</span>
+                        </td>
+                    </tr>
+                    <tr ng-show="commissionReport.length>0">
+                        <td></td>
+                        <td></td>
+                        <td class='amount'>{{(commissionReport | subTotal:'amount') | currency}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

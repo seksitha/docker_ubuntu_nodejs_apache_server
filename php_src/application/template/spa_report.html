@@ -1,0 +1,375 @@
+<div show-during-resolve><span us-spinner="{radius:8, width:4, length: 8}"></span></div>
+<div class="panel panel-default" ng-hide="false">
+    <!-- second row in the body -->
+    <div class="panel-heading" ng-init="showDialog=true">
+        <h5 class="col-md-11">Report: {{reportPeroid}} of {{theDate | date:"dd-MMM-yyyy"}}</h5>
+        <span class="btn btn-sm btn-info" ng-click="showDialog=true">Report</span>
+        <!-- <p>row-read, col-bule buffer gray</p> -->
+    </div>
+    <div class="panel-body" ng-init="showDialog = true">
+        <div class="row" ng-show="showDialog">
+            <div class="col-md-4 col-md-offset-4 display-none">
+                <div class="panel panel-info">
+                    <div class="panel-heading"> Report Commands</div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p class="tbold">Report Peroid</p>
+                                <select class="form-control" name="sometext" size="3" ng-model="reportPeroid">
+                                    <option value="Daily">Daily</option>
+                                    <option value="Monthly">Monthly</option>
+                                    <!-- <option value="peroidly">Peroidly</option> -->
+                                    <option value="Anually">Anually</option>
+                                </select>
+                                <p class="tbold">&nbsp;</p>
+                                <p class="tbold">Term filter</p>
+                                <input class="form-control" datepicker-popup="yyyy-MMM-dd" ng-click="start = true" is-open="start" ng-model="theDate" placeholder="Date Start">
+                            </div>
+                        </div>
+                        <div class="row">&nbsp;</div>
+                        <div class="row">
+                            <div class="col-md-12 cell-right">
+                                <button class="btn btn-sm btn-info" ng-click="getReport(theDate,reportPeroid);showDialog=false"> OK</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3">
+                <h5>{{reportPeroid}} Customer report</h5>
+                <div class="table-responsive">
+                    <table class="table table-striped table-bordered table-condensed table-hover">
+                        <thead>
+                            <tr>
+                                <th> Nationality</th>
+                                <th> number</th>
+                                <th> Percentage</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="data in spa_customer_monthly">
+                                <td>{{data.nationality}}</td>
+                                <td align="right">{{data.number}}</td>
+                                <td align="right">{{(data.number/(spa_customer_monthly | subTotal: 'number')*100)|percentage:1}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-8">
+                <h5>{{reportPeroid}} Menu report</h5>
+                <div class="table-responsive">
+                    <table class="table table-striped table-bordered table-condensed table-hover">
+                        <thead>
+                            <tr>
+                                <th> Menu</th>
+                                <th> Qty</th>
+                                <th> %</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="data in spa_menu_monthly">
+                                <td>{{data.name}}</td>
+                                <td align="right">{{data.qty}}</td>
+                                <td align="right">{{(data.qty / (spa_menu_monthly | subTotal: 'qty')*100)|percentage:1}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <h5>{{reportPeroid}} Customer Orientation</h5>
+                <!-- **************** -->
+                <div class="table-responsive">
+                    <table class="table table-striped table-bordered table-condensed table-hover">
+                        <thead>
+                            <tr>
+                                <th ng-repeat="(key, val) in spa_booking_source[0]">{{key | capitalize}} </th>
+                                <th>%</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="data in spa_orientation">
+                                <td>{{data['Orientation']}}</td>
+                                <td align="right">{{data.amount}}</td>
+                                <td align="right">{{(data.amount/(spa_orientation | subTotal: 'amount')*100)|percentage:1}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <h5>{{reportPeroid}} Booking Method</h5>
+                <!-- **************** -->
+                <div class="table-responsive">
+                    <table class="table table-striped table-bordered table-condensed table-hover">
+                        <thead>
+                            <tr>
+                                <th ng-repeat="(key, val) in spa_booking_source[0]">{{key | capitalize}} </th>
+                                <th>%</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="data in spa_booking_source">
+                                <td>{{data['Booking Method']}}</td>
+                                <td align="right">{{data.amount}}</td>
+                                <td align="right">{{(data.amount/(spa_orientation | subTotal: 'amount')*100)|percentage:1}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-5">
+                <h5>{{reportPeroid}} Sale report</h5>
+                <!-- **************** -->
+                <div class="table-responsive">
+                    <table class="table table-striped table-bordered table-condensed table-hover">
+                        <thead>
+                            <tr>
+                                <th> Date</th>
+                                <th> Cash</th>
+                                <th> CreditCard</th>
+                                <th> Voucher</th>
+                                <th> Sub-Total</th>
+                                <th> VAT10%</th>
+                                <th> Net+2%</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="data in spa_sale_monthlyVAT">
+                                <td>{{data.date}}</td>
+                                <td align="right">{{data.Cash|currency}}</td>
+                                <td align="right">{{data.CreditCard |currency}}</td>
+                                <td align="right">{{data.Voucher |currency}}</td>
+                                <td align="right">{{data['Sub-Total']|currency}}</td>
+                                <td align="right">{{data['VAT10%']|currency}}</td>
+                                <td align="right">{{data.Net|currency}}</td>
+                            </tr>
+                            <tr>
+                                <td>Total</td>
+                                <td style="padding-left: 2mm; font-weight: bold;text-align:right; ">{{(spa_sale_monthlyVAT | subTotal: 'Cash' | currency)}}</td>
+                                <td style="padding-left: 2mm; font-weight: bold;text-align:right; ">{{(spa_sale_monthlyVAT | subTotal: 'CreditCard' | currency)}}</td>
+                                <td style="padding-left: 2mm; font-weight: bold;text-align:right; ">{{(spa_sale_monthlyVAT | subTotal: 'Voucher' | currency)}}</td>
+                                <td style="padding-left: 2mm; font-weight: bold;text-align:right; ">{{(spa_sale_monthlyVAT | subTotal: 'Sub-Total' | currency)}}</td>
+                                <td style="padding-left: 2mm; font-weight: bold;text-align:right; ">{{(spa_sale_monthlyVAT | subTotal: 'VAT10%' | currency)}}</td>
+                                <td style="padding-left: 2mm; font-weight: bold;text-align:right; ">{{(spa_sale_monthlyVAT | subTotal: 'Net' | currency)}}</td>
+                            </tr>
+                            <tr>
+                                <td style="font-weight: bold;">Product</td>
+                                <td style="padding-left: 2mm; font-weight: bold;text-align:right; ">{{(spa_saleProduct_monthly| subTotal: 'cash') | currency}}</td>
+                                <td style="padding-left: 2mm; font-weight: bold;text-align:right; ">{{(spa_saleProduct_monthly| subTotal: 'credit_card') | currency}}</td>
+                                <td></td>
+                                <td style="padding-left: 2mm; font-weight: bold;text-align:right; ">{{(spa_saleProduct_monthly| subTotal: 'sub_total') | currency}}</td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td style="font-weight: bold;">Earn-Spend</td>
+                                <td style="padding-left: 2mm; font-weight: bold;text-align:right; ">
+                                    {{(spa_transport_monthly|subTotal: 'Cash') | currency}}
+                                </td>
+                                <td style="padding-left: 2mm; font-weight: bold;text-align:right; ">
+                                    {{(spa_transport_monthly|subTotal: 'CreditCard') | currency}}
+                                </td>
+                                <td></td>
+                                <td style="padding-left: 2mm; font-weight: bold;text-align:right; ">
+                                    {{(spa_transport_monthly|subTotal: 'Cash')+(spa_transport_monthly|subTotal: 'CreditCard') | currency}}
+                                </td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td style="font-weight: bold;">GrantTotal</td>
+                                <!-- cash -->
+                                <td style="padding-left: 2mm; font-weight: bold;text-align:right; "> 
+                                    {{((spa_sale_monthlyVAT | subTotal: 'Cash')+ (spa_saleProduct_monthly| subTotal: 'cash') +  (spa_transport_monthly|subTotal: 'Cash')) | currency}}
+                                </td>
+                                <!-- Credit card -->
+                                <td style="padding-left: 2mm; font-weight: bold;text-align:right; ">
+                                    {{((spa_sale_monthlyVAT | subTotal: 'CreditCard')+ (spa_saleProduct_monthly| subTotal: 'credit_card') + (spa_transport_monthly|subTotal: 'CreditCard')) | currency}}
+                                </td>
+                                <!-- Voucher -->
+                                <td style="padding-left: 2mm; font-weight: bold;text-align:right; ">
+                                    {{(spa_sale_monthlyVAT | subTotal: 'Voucher')|currency}}
+                                </td>
+                                <!-- subTotal -->
+                                <td style="padding-left: 2mm; font-weight: bold;text-align:right; ">
+                                    {{((spa_sale_monthlyVAT | subTotal: 'Sub-Total')+ (spa_saleProduct_monthly| subTotal: 'sub_total')+((spa_transport_monthly|subTotal: 'Cash')+(spa_transport_monthly|subTotal: 'CreditCard'))) | currency}}
+                                </td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <h5>{{reportPeroid}} Transportation</h5>
+                <!-- **************** -->
+                <div class="table-responsive">
+                    <table class="table table-striped table-bordered table-condensed table-hover">
+                        <thead>
+                            <tr>
+                                <th> Date</th>
+                                <th> Cash</th>
+                                <th> Credit Card</th>
+                            </tr>
+                        </thead>
+                        <tbody >
+                            <tr ng-repeat='data in spa_transport_monthly'>
+                                <td ng-repeat='(key,val) in data ' align="right" >{{(val|currency)||val}}</td>
+                            </tr>
+                            <tr>
+                                <td>Total</td>
+                                <td style="padding-left: 2mm; font-weight: bold;text-align:right; ">{{(spa_transport_monthly| subTotal: 'Cash' | currency)}}</td>
+                                <td style="padding-left: 2mm; font-weight: bold;text-align:right; ">{{(spa_transport_monthly| subTotal: 'CreditCard' | currency)}}</td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <h5>{{reportPeroid}} Sale Products</h5>
+                <!-- **************** -->
+                <div class="table-responsive">
+                    <table class="table table-striped table-bordered table-condensed table-hover">
+                        <thead>
+                            <tr>
+                                <th> Date</th>
+                                <th> Cash</th>
+                                <th> CreditCard</th>
+                                <th> Sub-Total</th>
+                                <th> Net</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="data in spa_saleProduct_monthly">
+                                <td>{{data.date}}</td>
+                                <td align="right">{{data.cash|currency}}</td>
+                                <td align="right">{{data.credit_card|currency}}</td>
+                                <td align="right">{{data.sub_total|currency}}</td>
+                                <td align="right">{{data.Net|currency}}</td>
+                            </tr>
+                            <tr>
+                                <td>Total</td>
+                                <td style="padding-left: 2mm; font-weight: bold;text-align:right; ">{{(spa_saleProduct_monthly| subTotal: 'cash' | currency)}}</td>
+                                <td style="padding-left: 2mm; font-weight: bold;text-align:right; ">{{(spa_saleProduct_monthly| subTotal: 'credit_card' | currency)}}</td>
+                                <td style="padding-left: 2mm; font-weight: bold;text-align:right; ">{{(spa_saleProduct_monthly| subTotal: 'sub_total' | currency)}}</td>
+                                <td style="padding-left: 2mm; font-weight: bold;text-align:right; ">{{(spa_saleProduct_monthly| subTotal: 'Net' | currency)}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3">
+                <h5>{{reportPeroid}} Sale Tour</h5>
+                <!-- **************** -->
+                <div class="table-responsive">
+                    <table class="table table-striped table-bordered table-condensed table-hover">
+                        <thead>
+                            <tr>
+                                <th> Date</th>
+                                <th> Sales</th>
+                                <th> VAT10%</th>
+                                <th> Net</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="data in spa_saleTour">
+                                <td>{{data.date}}</td>
+                                <td align="right">{{data.Sale|currency}}</td>
+                                <td align="right">{{data.netVAT|currency}}</td>
+                                <td align="right">{{data['Net']|currency}}</td>
+                            </tr>
+                            <tr>
+                                <td>Total</td>
+                                <td style="padding-left: 2mm; font-weight: bold;text-align:right; ">{{(spa_saleTour | subTotal: 'Sale' | currency)}}</td>
+                                <td style="padding-left: 2mm; font-weight: bold;text-align:right; ">{{(spa_saleTour | subTotal: 'netVAT' | currency)}}</td>
+                                <td style="padding-left: 2mm; font-weight: bold;text-align:right; ">{{(spa_saleTour | subTotal: 'Net' | currency)}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <h5>{{reportPeroid}} Sale Treatment</h5>
+                <!-- **************** -->
+                <div class="table-responsive">
+                    <table class="table table-striped table-bordered table-condensed table-hover">
+                        <thead>
+                            <tr>
+                                <th> Date</th>
+                                <th> Sales</th>
+                                <th> VAT10%</th>
+                                <th> Net</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="data in spa_saleTreatment">
+                                <td>{{data.date}}</td>
+                                <td align="right">{{data.Sale|currency}}</td>
+                                <td align="right">{{data.netVAT|currency}}</td>
+                                <td align="right">{{data['Net']|currency}}</td>
+                            </tr>
+                            <tr>
+                                <td>Total</td>
+                                <td style="padding-left: 2mm; font-weight: bold;text-align:right; ">{{(spa_saleTreatment | subTotal: 'Sale' | currency)}}</td>
+                                <td style="padding-left: 2mm; font-weight: bold;text-align:right; ">{{(spa_saleTreatment | subTotal: 'netVAT' | currency)}}</td>
+                                <td style="padding-left: 2mm; font-weight: bold;text-align:right; ">{{(spa_saleTreatment | subTotal: 'Net' | currency)}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <h5>{{reportPeroid}} Therapist Commission</h5>
+                <!-- **************** -->
+                <div class="table-responsive">
+                    <table class="table table-striped table-bordered table-condensed table-hover">
+                        <thead>
+                            <tr>
+                                <th ng-repeat="(key, val) in spa_commission_monthly[0]">{{key | capitalize}} </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="data in spa_commission_monthly">
+                                <td>{{data.name}}</td>
+                                <td align="right">{{data.amount | currency}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <h5>{{reportPeroid}} Booking Commission</h5>
+                <!-- **************** -->
+                <div class="table-responsive">
+                    <table class="table table-striped table-bordered table-condensed table-hover">
+                        <thead>
+                            <tr>
+                                <th ng-repeat="(key, val) in spa_booking_commis_monthly[0]">{{key | capitalize}} </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="data in spa_booking_commis_monthly">
+                                <td>{{data.commissioner}}</td>
+                                <td align="right">{{data.amount | currency}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- div of first row -->
+</div>
+<!-- div for panel body -->
+</div>
+<!-- div for panel -->

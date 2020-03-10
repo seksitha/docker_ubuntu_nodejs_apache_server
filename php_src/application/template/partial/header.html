@@ -1,0 +1,50 @@
+<div class="container-fluid">
+    <nav class="navbar navbar-inverse row" ng-controller="collapseCtrl">
+        <!-- first row in the body -->
+        <div class="">
+            <div class="navbar-header">
+                <a class="navbar-brand" href=" "><span class="glyphicon glyphicon-home"></span>&nbsp;SPA KHMER</a>
+                <button type="button" class="navbar-toggle collapsed" ng-click="isCollapsed = !isCollapsed">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+            <div class="navbar-collapse" collapse="isCollapsed">
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="" uib-dropdown is-open="status.sale">
+                        <a type="button" class="" uib-dropdown-toggle ng-disabled="disabled">
+						  SALE<span class="caret"></span>
+					  	</a>
+                        <ul class="dropdown-menu" role="menu" aria-labelledby="sale">
+                            <li><a ui-sref="main.sale.sale_retail">Retail</a></li>
+                            <li><a ui-sref="main.sale.sale_wholeSale">Whole Sale</a></li>
+                            <li><a ui-sref="main.sale.sale_backMargin">Back Margin</a></li>
+                        </ul>
+                    </li>
+                    
+                    <li><a href="info/spa_info_employee">Employee</a></li>
+                    <li><a href="info/spa_info_product">Menu</a></li>
+                    <li><a href="info/spa_sale_customer">Customer</a></li>
+                    <li><a href="info/spa_info_commissioner">Commission</a></li>
+                    <li class="" uib-dropdown is-open="status.issale">
+                        <a id="single-button" type="button" class="" uib-dropdown-toggle ng-disabled="disabled">
+						  Option List<span class="caret"></span>
+					  	</a>
+                        <ul class="dropdown-menu" role="menu" aria-labelledby="single-button">
+                            <li ng-repeat='link in tableList'><a href="info/{{link.code}}">{{link.title}}</a></li>
+                        </ul>
+                    </li>
+                    <!-- <li><a ng-href="spa_booking/booking/">Booking</a></li>     -->
+                    <!-- <li><a href="schedule_spa">Schedule</a></li>      -->
+                    <li><a ui-sref="main.salePartner">Partner</a></li>
+                    <li><a ui-sref="main.reportSpa">Report</a></li>
+                    <li><a ui-sref="main.logout">log out</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</div>
+<div ui-view> </div>
+<!-- Nested view Child -->
