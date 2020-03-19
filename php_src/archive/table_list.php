@@ -1,65 +1,64 @@
 <?php
-   // OK, this is the full app with mysql that can do , read, insert, update, and delete.
-   // My goals is to give you the complete example so that you can read the code and have as much as question.
-   // there are app.css, mysql.php, http_handler.php, and table_list.php
-   // I thought it is the easy on but I think this is rather advance. when I frist start writing this app it took me 
-   // about 2 months to just write this funtionality but now I can write it about 6 hours.
-   // css maybe about 100 lines
-   // php and javascript is about 300 line of codes.
-   // this app is client side rendering it is mainly done by JS
-   // So this is the challenge of you guys to read and ask me any question. I have PDF files for you to print and read.
-   // Please open and print them in folder of old_files. good luck.
-   // So this video is to show you how the app work.
+// OK, this is the full app with mysql that can do , read, insert, update, and delete.
+// My goals is to give you the complete example so that you can read the code and have as much as question.
+// there are app.css, mysql.php, http_handler.php, and table_list.php
+// I thought it is the easy on but I think this is rather advance. when I frist start writing this app it took me
+// about 2 months to just write this funtionality but now I can write it about 6 hours.
+// css maybe about 100 lines
+// php and javascript is about 300 line of codes.
+// this app is client side rendering it is mainly done by JS
+// So this is the challenge of you guys to read and ask me any question. I have PDF files for you to print and read.
+// Please open and print them in folder of old_files. good luck.
+// So this video is to show you how the app work.
 
-   // WHAT VUTEY HAS LEARNED SO FAR
-   // Syntax and control flow in programing is learned by Vutey but not yet algorithm Design, Design parttern, Development achitecture,
-   
-   // WHAT HE HAS TO LEARN MORE
-   // algorithm Design, input and output thought process base on heavily understand of logic.
-   // Design parttern and best practice, resusable code, clean and easy maintinance, prodedule code, funtional program, object oriented, spagati code. javascript objec!
-   // Development achitecture ex. do you use framework, single page appliciation, server rendering, or client side rendering, 
-      // use mobile rendering, detabase decision: nosql, relational sql, embeded data store.
+// WHAT VUTEY HAS LEARNED SO FAR
+// Syntax and control flow in programing is learned by Vutey but not yet algorithm Design, Design parttern, Development achitecture,
 
+// WHAT HE HAS TO LEARN MORE
+// algorithm Design, input and output thought process base on heavily understand of logic.
+// Design parttern and best practice, resusable code, clean and easy maintinance, prodedule code, funtional program, object oriented, spagati code. javascript objec!
+// Development achitecture ex. do you use framework, single page appliciation, server rendering, or client side rendering,
+// use mobile rendering, detabase decision: nosql, relational sql, embeded data store.
 
-   // NEXT STEP TO GET THE 3 IMPORTANT GOALS ABOVE
-   // 1. what is the output goal and app feature, app requirements of this app from output/requirement perspective.
-         // the goal is to take mysql table and do CRUD event.
-   // 2. Understand the algorithm by Finding the all the event that make up the application
-   // 3. Try to understand the algorithm that buil the app
-   // 4. Why do we used client side development achitecture 
-   // 5. Learn to design database for specific application and how to write report from database ex. inventory book borrowed, products sold!
+// NEXT STEP TO GET THE 3 IMPORTANT GOALS ABOVE
+// 1. what is the output goal and app feature, app requirements of this app from output/requirement perspective.
+// the goal is to take mysql table and do CRUD event.
+// 2. Understand the algorithm by Finding the all the event that make up the application
+// 3. Try to understand the algorithm that buil the app
+// 4. Why do we used client side development achitecture
+// 5. Learn to design database for specific application and how to write report from database ex. inventory book borrowed, products sold!
 
-   include_once 'data_api/mysql.php';
-   include_once 'header.php';
-   $sql = "INSERT into $table_name (a, b , c , d ) values (3, 'helo', 'kkk', 4) "
-   
+include_once 'data_api/mysql.php';
+include_once 'header.php';
+$sql = "INSERT into $table_name (a, b , c , d ) values (3, 'helo', 'kkk', 4) "
+
 ?>
 
 <main id='container' class="panel panel-info row">
    <?php
-      // $data = read_data('info_teacher');
-      // // echo '<pre>';
-      // // print_r($data);
+// $data = read_data('info_teacher');
+// // echo '<pre>';
+// // print_r($data);
 
-      // echo '<table border="1"><thead>';
+// echo '<table border="1"><thead>';
 
-      //    foreach ($data[0] as $key => $value) {
-      //       echo '<th>' . $key . '</th>';
-      //    }
+//    foreach ($data[0] as $key => $value) {
+//       echo '<th>' . $key . '</th>';
+//    }
 
-      // echo '</thead>';
-      // echo '<tbody>';
+// echo '</thead>';
+// echo '<tbody>';
 
-      //    foreach ($data as $key => $value) {
-      //       echo '<tr>';
-      //       foreach ($value as $ind => $val) {
-      //             echo '<td>' . $val . '</td>';
-      //       }
-      //       echo '</tr>';
-      //    }
+//    foreach ($data as $key => $value) {
+//       echo '<tr>';
+//       foreach ($value as $ind => $val) {
+//             echo '<td>' . $val . '</td>';
+//       }
+//       echo '</tr>';
+//    }
 
-      // echo '</tbody></table>';
-   ?>
+// echo '</tbody></table>';
+?>
    <div class="panel-heading col-md-12">
       <div class="row">
          <div class="col-md-1"><b>Book list</b> </div>
@@ -124,7 +123,7 @@
       })
    })
 
-   
+
    document.querySelector('body').addEventListener('click', function(event) {
       if (event.target.attributes['data-edit']) {
          editRecord = pageData[event.target.parentNode.parentNode.rowIndex-1]
@@ -157,14 +156,14 @@
          console.log(editRecord);
          var form = document.querySelector('#form');
          var record = new FormData(form);
-         
+
          if(updateCommand) {
-            var beforeEdit = Object.assign({},editRecord); // 
+            var beforeEdit = Object.assign({},editRecord); //
          }else{
             editRecord = Object.assign({}, recordToBuildForm); // we don't delete id here but in the backend at insert fnc
          }
          for (var pair of record.entries()) {
-            editRecord[pair[0]] = pair[1]; 
+            editRecord[pair[0]] = pair[1];
          }
          $.ajax({
             url: 'data_api/http_handler.php?query=' + (updateCommand ? 'update' : 'insert' ) + '&table_name='+ infoId ,
@@ -172,7 +171,8 @@
             type: 'post',
             data: editRecord,
             success: function(response) {
-               
+              console.log(reS)
+
                if(updateCommand) { // if this the update command
                   dataFromServer[dataFromServer.indexOf(beforeEdit)] = Object.assign({},editRecord);
                }else{ // or adding new
@@ -207,6 +207,7 @@
          dataType:'json',
          type: 'get',
          success: function(response) {
+            console.log(response) // add this to see the data
             dataFromServer = response;
             maxPage = Math.ceil(response.length / itemPerPage) || 1
             currentPage = maxPage;
