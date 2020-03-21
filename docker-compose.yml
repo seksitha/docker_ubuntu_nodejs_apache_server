@@ -30,8 +30,8 @@ services:
       - 3308:3308
     volumes:
     # need to make file sharing in docker filesharing preference to get it to work.
-      - ./mysql/data:/etc/mysql/conf.d # working-directory : mysql server directory in container
-      - ./mysql/data:/var/lib/mysql #ex/in
+      - ./mysql:/etc/mysql/conf.d # working-directory : mysql server directory in container
+      - ./mysql:/var/lib/mysql #ex/in
     environment:
       MYSQL_DATABASE: data
       #root
