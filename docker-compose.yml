@@ -1,10 +1,12 @@
 # indentation is very important for yml file incorrectly done will not work
-# every container has image(s) for it to run
-version: "3" #this is docker version is not app version
+# every container has image(s) for it to run and the images can be multiple by clone from docker hub
+version: "3.7" #this is docker version is not app version
 services:
   apache: # apache server
     container_name: for_web_tutorial
-    build: . # build from Docker file not from image
+    build: # build from Docker file not from image
+      context: .
+      target: web_server
     ports:
       - 8800:88 #ex:in
       - 8811:8080
@@ -20,18 +22,32 @@ services:
       - TZ=Asia/Phnom_Penh`
     # restart: always # this is to start container when docker start / or computer reboot
   database: 
-      container_name: tutorial_db
-      image: "mysql:5"
-      ports:
-        - 3308:3306
-      volumes:
-      # need to make file sharing in docker filesharing preference to get it to work.
-        - ./mysql/data:/etc/mysql/conf.d # working-directory : mysql server directory in container
-        - ./mysql/data:/var/lib/mysql #ex/in
-      environment:
-        MYSQL_DATABASE: kasekordb
-        MYSQL_ROOT_PASSWORD: 123456 # if need to chage dont chage it here after build need to chage in mysql / phpmyadmin
-        MYSQL_USER: seksitha
-        MYSQL_USER_PASSWORD: 123456
-        MYSQL_ROOT_HOST: "%"
-        MYSQL_USER_HOST: "%"
+    container_name: tutorial_db
+    build:
+      context: .
+      target: mysql
+    ports:
+      - 3308:3308
+    volumes:
+    # need to make file sharing in docker filesharing preference to get it to work.
+      - ./mysql/data:/etc/mysql/conf.d # working-directory : mysql server directory in container
+      - ./mysql/data:/var/lib/mysql #ex/in
+    environment:
+      MYSQL_DATABASE: data
+      #root
+      MYSQL_ROOT_PASSWORD: 123456 # if need to chage dont chage it here after build need to chage in mysql / phpmyadmin
+      MYSQL_ROOT_HOST: "%"
+      #none root
+      MYSQL_USER: seksitha
+      MYSQL_USER_PASSWORD: 123456
+      MYSQL_USER_HOST: "%"
+    
+  phpmyadmin: ## this can also install in centos image but need extra config
+    image: phpmyadmin/phpmyadmin
+    container_name: dbadmin
+    links:
+      - database # link to db service define so it can comunicate as a one server
+    environment:
+      - PMA_ARBITRARY=1
+    ports:
+      - 99:80 #ex#in

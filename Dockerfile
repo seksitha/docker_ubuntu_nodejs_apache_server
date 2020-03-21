@@ -1,4 +1,4 @@
-FROM bitnami/apache
+FROM bitnami/apache as web_server
 LABEL maintainer "Bitnami <containers@bitnami.com>"
 
 ## Install 'vim'
@@ -17,11 +17,9 @@ RUN install_packages php \
     npm 
 USER 1001 
 # Revert to the original non-root user
-
 EXPOSE 8080 88
-
-#  -D FOREGROUND
-# USER 0
-# CMD  cd /home && npm install && npm start
-# USER 1001 
 USER 1002
+
+FROM mysql:5 as mysql
+ADD ./data.sql /docker-entrypoint-initdb.d
+EXPOSE 3308
