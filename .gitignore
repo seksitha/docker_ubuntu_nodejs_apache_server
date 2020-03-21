@@ -2,9 +2,14 @@
 
 /js_src/node_modules
 
-/libs/*
+#works
 /libs/apache/*
 !/libs/apache/README.md
+
+# does not works
+# /libs/*
+# /libs/apache/*
+# !/libs/apache/README.md
 
 /mysql/*
 !/mysql/README.md
