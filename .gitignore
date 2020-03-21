@@ -1,4 +1,9 @@
-/js_src/node_modules
 .DS_Store
-/mysql
 
+/js_src/node_modules
+
+/libs/apache/
+!/libs/apache/README.md
+
+/mysql/
+!/mysql/README.md
