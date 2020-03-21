@@ -2,8 +2,9 @@
 
 /js_src/node_modules
 
-/libs/apache/
+/libs/*
+/libs/apache/*
 !/libs/apache/README.md
 
-/mysql/
+/mysql/*
 !/mysql/README.md
