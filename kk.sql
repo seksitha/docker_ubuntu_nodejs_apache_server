@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: database
--- Generation Time: Mar 22, 2020 at 02:41 PM
+-- Generation Time: Mar 22, 2020 at 02:45 PM
 -- Server version: 5.7.27
 -- PHP Version: 7.2.19
 
@@ -23,6 +23,30 @@ SET time_zone = "+00:00";
 --
 CREATE DATABASE IF NOT EXISTS `kk` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
 USE `kk`;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `info_exchange_rate`
+--
+
+DROP TABLE IF EXISTS `info_exchange_rate`;
+CREATE TABLE `info_exchange_rate` (
+  `id` int(11) NOT NULL,
+  `currency` varchar(20) NOT NULL,
+  `rate` double NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `info_exchange_rate`
+--
+
+INSERT INTO `info_exchange_rate` (`id`, `currency`, `rate`) VALUES
+(1, 'KHR', 4000),
+(2, 'THB', 34.776),
+(3, 'JPY', 116.61),
+(4, 'CNY', 7),
+(5, 'USD', 1);
 
 -- --------------------------------------------------------
 
@@ -34412,6 +34436,12 @@ INSERT INTO `users` (`id`, `name`, `password`, `status`) VALUES
 --
 
 --
+-- Indexes for table `info_exchange_rate`
+--
+ALTER TABLE `info_exchange_rate`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `info_product`
 --
 ALTER TABLE `info_product`
@@ -34535,6 +34565,12 @@ ALTER TABLE `users`
 --
 -- AUTO_INCREMENT for dumped tables
 --
+
+--
+-- AUTO_INCREMENT for table `info_exchange_rate`
+--
+ALTER TABLE `info_exchange_rate`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `info_product`
