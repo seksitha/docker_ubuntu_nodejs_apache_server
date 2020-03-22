@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: database
--- Generation Time: Mar 22, 2020 at 02:45 PM
+-- Generation Time: Mar 22, 2020 at 02:52 PM
 -- Server version: 5.7.27
 -- PHP Version: 7.2.19
 
@@ -3086,7 +3086,7 @@ CREATE TABLE `spa_sale_massage` (
   `gender` varchar(255) DEFAULT NULL,
   `cus_email` varchar(100) DEFAULT NULL,
   `cus_oriented` varchar(50) DEFAULT NULL,
-  `cus_follow_up` int(11) NOT NULL,
+  `cus_follow_up` int(11) NOT NULL DEFAULT '0',
   `time` datetime DEFAULT NULL,
   `bill` double DEFAULT '0',
   `memo` longtext,
@@ -3111,14 +3111,14 @@ CREATE TABLE `spa_sale_massage` (
   `commissioner` varchar(20) DEFAULT NULL,
   `earn_transport` decimal(11,2) NOT NULL DEFAULT '0.00',
   `spend_transport` decimal(11,2) NOT NULL DEFAULT '0.00',
-  `isVAT` tinyint(1) NOT NULL,
+  `isVAT` tinyint(1) NOT NULL DEFAULT '0',
   `status` varchar(20) DEFAULT NULL,
   `book_method` varchar(50) DEFAULT NULL,
   `voucher` varchar(50) DEFAULT NULL,
   `partner` varchar(30) DEFAULT NULL,
   `back_margin` int(11) DEFAULT NULL,
   `sale_status` int(11) NOT NULL DEFAULT '0',
-  `is_tran_charg` tinyint(4) NOT NULL
+  `is_tran_charg` tinyint(4) NOT NULL DEFAULT '0'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
@@ -8944,7 +8944,8 @@ INSERT INTO `spa_sale_massage` (`id`, `book_by`, `inv_num`, `inv_refer`, `date_b
 (5970, 0, 22, '201904-0022', '2019-04-04 00:00:00', '2019-04-04', 'Vincent', 'Chinese', 14, 40, 'Male', NULL, 'Internet Search, Blog', 0, NULL, 0, NULL, 'Voucher', 0, 58.0635, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 0, NULL, 0, 0, 0, NULL, NULL, '0.00', '0.00', 1, NULL, 'Travel Agency', 'EQV665064', '23', NULL, 1, 0),
 (5971, 0, 23, '201904-0023', '2019-04-06 00:00:00', '2019-04-06', 'Konishi Chika', 'Japanese', 2, 0, 'Female', NULL, 'Recommend by someone', 0, NULL, 0, NULL, 'Cash', 0, 130.9, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 0, NULL, 0, 0, 0, NULL, NULL, '1.50', '0.00', 1, NULL, 'Spa Website', NULL, NULL, NULL, 0, 0),
 (5972, 0, 24, '201904-0024', '2019-04-06 00:00:00', '2019-04-06', 'Tomoko Konishi', 'Japanese', 2, 51, 'Female', NULL, 'Internet Search, Blog', 0, NULL, 0, NULL, 'Cash', 0, 91.63, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 0, NULL, 0, 0, 0, NULL, NULL, '1.50', '0.00', 1, NULL, 'Spa Website', NULL, NULL, NULL, 0, 0),
-(5973, 0, 25, '201904-0025', '2019-04-08 00:00:00', '2019-04-08', 'okamoto reina', 'Japanese', 22, 25, 'Female', NULL, 'Guidebook', 0, NULL, 0, NULL, 'Cash', 0, 82.5, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 0, NULL, 0, 0, 0, NULL, NULL, '3.00', '0.00', 1, NULL, 'Spa Website', NULL, NULL, NULL, 0, 0);
+(5973, 0, 25, '201904-0025', '2019-04-08 00:00:00', '2019-04-08', 'okamoto reina', 'Japanese', 22, 25, 'Female', NULL, 'Guidebook', 0, NULL, 0, NULL, 'Cash', 0, 82.5, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 0, NULL, 0, 0, 0, NULL, NULL, '3.00', '0.00', 1, NULL, 'Spa Website', NULL, NULL, NULL, 0, 0),
+(5974, 0, 1, '202003-0001', '2020-03-22 00:00:00', '2020-03-22', NULL, NULL, 2, 0, NULL, NULL, NULL, 0, NULL, 0, NULL, 'Cash', 0, 55, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 0, NULL, 0, 0, 0, NULL, NULL, '0.00', '0.00', 0, NULL, NULL, NULL, NULL, NULL, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -16041,7 +16042,8 @@ INSERT INTO `spa_sale_massage_detail` (`id`, `main_id`, `number`, `product`, `qt
 (7229, 5971, 1, 47, 1, '119.00', 0, 8, NULL),
 (7230, 5972, 1, 47, 1, '119.00', 30, 11, NULL),
 (7231, 5973, 1, 6, 1, '55.00', 0, 11, NULL),
-(7232, 5973, 2, 9, 1, '20.00', 0, 11, NULL);
+(7232, 5973, 2, 9, 1, '20.00', 0, 11, NULL),
+(7233, 5974, 1, 6, 1, '55.00', 0, 12, NULL);
 
 -- --------------------------------------------------------
 
@@ -34648,13 +34650,13 @@ ALTER TABLE `spa_sale_feedback`
 -- AUTO_INCREMENT for table `spa_sale_massage`
 --
 ALTER TABLE `spa_sale_massage`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5974;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5975;
 
 --
 -- AUTO_INCREMENT for table `spa_sale_massage_detail`
 --
 ALTER TABLE `spa_sale_massage_detail`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7233;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7234;
 
 --
 -- AUTO_INCREMENT for table `spa_sale_product`
