@@ -7,7 +7,10 @@ myApp.controller("loginCtrl", [
 		$scope.username = "";
 		$scope.password = "";
 
-		$scope.login = function(user, pass) {
+		$scope.login = function(event,user, pass) {
+      event.preventDefault()
+      console.log($http)
+
 			$http.post("api/login", { username: user, password: pass }).then(
 				function() {
 					$location.path("/report_spa");
@@ -19,7 +22,8 @@ myApp.controller("loginCtrl", [
 						$scope.alertLogin = true;
 					}, 500);
 				}
-			);
+      );
+      
 		};
 	},
 ]);

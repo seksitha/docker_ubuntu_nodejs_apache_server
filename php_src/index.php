@@ -1,3 +1,14 @@
+<?php 
+  session_start();
+  // phpinfo();
+  if (!isset($_SESSION['spa'])) { 
+      //echo $_SERVER['REQUEST_URI'] ;
+      if($_SERVER['REQUEST_URI'] !== '/login'){
+        header('Location: /login');
+      } 
+  }
+?>
+
 <!DOCTYPE html>
 <html lang="en" ng-app="myApp">
 
@@ -16,25 +27,14 @@
 
     <!-- should chage to invoice.css -->
     <link href="public/css/print.css?v=2.01" rel="stylesheet">
-    <?php 
-        session_start();
-        phpinfo();
 
-
-        if (!isset($_SESSION['spa'])) { 
-            //echo $_SERVER['REQUEST_URI'] ;
-            if($_SERVER['REQUEST_URI'] !== '/login'){
-                header('Location: /login');
-            } 
-        }
-    ?>
-    <?php 
-    $version = 3.1;
-    echo "<script>var version = $version</script>";
-    echo"<link href='public/css/app.css?v=$version' rel='stylesheet'>
+    <?php
+$version = 3.1;
+echo "<script>var version = $version </script>";
+echo "<link href='public/css/app.css?v=$version' rel='stylesheet'>
     <link href='public/css/appPrint.css?v=$version' rel='stylesheet'>
     <link rel='stylesheet' href='/public/css/login.css?v=$version'>"
-    ?>
+?>
 
     <!-- Java Script -->
     <script src="public/js/jquery.min.js"></script>
@@ -58,23 +58,22 @@
         <!-- multiview -->
         <!-- There is a ui-view after header.html for child view. -->
     </div>
-    
+
     <!--app version change here-->
     <?php
-    echo '<script src="application/appScript/services.js?v='.$version.'"></script>'.
-    '<script src="app.js?v='.$version.'"></script>'.
-    '<script src="application/appScript/filters.js?v='.$version.'"></script>'.
-    
-    '<script src="application/appScript/directives.js?v='.$version.'"></script>'.
+echo '<script src="application/appScript/services.js?v=' . $version . '"></script>' .
+    '<script src="app.js?v=' . $version . '"></script>' .
+    '<script src="application/appScript/filters.js?v=' . $version . '"></script>' .
 
-    '<script src="application/appScript/controllers/Ctrl_InfoList.js?v='.$version.'"></script>'.
+    '<script src="application/appScript/directives.js?v=' . $version . '"></script>' .
 
+    '<script src="application/appScript/controllers/Ctrl_InfoList.js?v=' . $version . '"></script>' .
 
-    '<script src="application/appScript/controllers/Ctrl_Spa_Schedule.js?v='.$version.'"></script>'.
-    '<script src="application/appScript/controllers/Ctrl_Spa_Booking.js?v='.$version.'"></script>'.
-    '<script src="application/appScript/controllers/Ctrl_Spa_Report.js?v='.$version.'"></script>'.
-    '<script src="application/appScript/controllers/Ctrl_Login.js?v='.$version.'"></script>'
-    ;?>
+    '<script src="application/appScript/controllers/Ctrl_Spa_Schedule.js?v=' . $version . '"></script>' .
+    '<script src="application/appScript/controllers/Ctrl_Spa_Booking.js?v=' . $version . '"></script>' .
+    '<script src="application/appScript/controllers/Ctrl_Spa_Report.js?v=' . $version . '"></script>' .
+    '<script src="application/appScript/controllers/Ctrl_Login.js?v=' . $version . '"></script>'
+; ?>
 </body>
 
 </html>

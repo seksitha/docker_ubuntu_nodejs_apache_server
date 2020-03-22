@@ -1,10 +1,12 @@
 .DS_Store
 
 /js_src/node_modules
+/backend-js/node_modules
 
 #works
 /libs/apache/*
 !/libs/apache/README.md
+!/libs/apache/apache2.conf
 
 # does not works
 # /libs/*

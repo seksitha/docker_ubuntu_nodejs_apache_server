@@ -1,5 +1,6 @@
 # indentation is very important for yml file incorrectly done will not work
 # every container has image(s) for it to run and the images can be multiple by clone from docker hub
+# docker-compose up --build --no-deps --force-recreate apache
 version: "3.7" #this is docker version is not app version
 services:
   apache: # apache server
@@ -8,18 +9,17 @@ services:
       context: .
       target: web_server
     ports:
-      - 8800:88 #ex:in
-      - 8811:8080
+      - 8811:80 #ex:in
     volumes:
-      # - ./js_src/:/
-      - ./php_src:/app
-      - ./libs/apache:/etc/apache2/
+      - ./php_src:/var/www/html
       - ./libs/apache:/var/log/apache2/
+      - ./libs/apache:/etc/apache2/apache2.conf
     tty: true
     links: 
       - database
     environment:
-      - TZ=Asia/Phnom_Penh`
+      - TZ=Asia/Phnom_Penh
+      - DEBIAN_FRONTEND=noninteractive
     # restart: always # this is to start container when docker start / or computer reboot
   database: 
     container_name: tutorial_db
@@ -51,3 +51,19 @@ services:
       - PMA_ARBITRARY=1
     ports:
       - 99:80 #ex#in
+  node: # express server
+    container_name: node_server
+    build: 
+      context: .
+      target: node
+    environment:
+      - TZ=Asia/Phnom_Penh
+      - DEBIAN_FRONTEND=noninteractive
+    ports:
+      - "3300:3300" #ex/in
+    volumes:
+      - ./backend-js:/home/app
+    links:
+      - database # link to db service define below
+    
+    
