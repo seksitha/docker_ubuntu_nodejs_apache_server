@@ -13,7 +13,7 @@ services:
     volumes:
       - ./php_src:/var/www/html
       - ./libs/apache:/var/log/apache2/
-      - ./libs/apache:/etc/apache2/apache2.conf
+      - ./libs/apache/apache2.conf:/etc/apache2/apache2.conf
     tty: true
     links: 
       - database
