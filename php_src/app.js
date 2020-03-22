@@ -29,8 +29,8 @@ myApp.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', funct
             $http.get('api/getInfo/info_id/spa_sale_customer'),
             $http.get('api/getInfo/info_id/spa_info_commissioner'),
             $http.get('api/getInfo/info_id/spa_info_tables'),
-            $http.get('api/getInfo/info_id/spa_info_bookMethod'),
-            $http.get('api/getInfo/info_id/spa_info_Orientation')
+            $http.get('api/getInfo/info_id/spa_info_bookmethod'),
+            $http.get('api/getInfo/info_id/spa_info_orientation')
         ]).then(function(re) { //date invoice
             defer.resolve(re);
         });

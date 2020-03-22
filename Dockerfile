@@ -30,7 +30,7 @@ RUN apt-get install -y nodejs
 COPY node.sh /usr/local/bin/
 ENTRYPOINT [ "node.sh" ]
 EXPOSE 3300
-CMD /home/app/node_modules/.bin/nodemon index.js
+CMD cd /home/app && node_modules/.bin/nodemon index.js
 
 
 
