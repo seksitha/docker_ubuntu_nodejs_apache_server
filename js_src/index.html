@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <!-- <script src="jquery-1.12.4.min.js"></script> -->
+  <title>Document</title>
+</head>
+<body>
+  <script>
+      !(function(g, e, t, l, o, y) {
+        g.GetLoyPayments = t;
+        g[t] ||
+          (g[t] = function() {
+            (g[t].q = g[t].q || []).push(arguments);
+          });
+        g[t].l = +new Date();
+        o = e.createElement(l);
+        y = e.getElementsByTagName(l)[0];
+        o.src = "script.js";
+        y.parentNode.insertBefore(o, y);
+      })(window, document, "gl", "script");
+
+      gl("payload", {
+        tid: "GKH-286",
+        provider: "payway_kh",
+        merchant_hash:
+          "a8c6772a8d6f881796cf4afdf3858615c0d0fd93f6acda7c3b9e2ae324494329b3f88bd1dca914988177b45586df901252c0e33ed139446a1e99a34ba7ce32df",
+        auth_hash:
+          "ee70f48a80acfd4e86beb5b22b87824d279e9133f773efee3417015353c6099ace07164929813bebfa933c1f8bcacc0427ea9933d34d86fc38a630a82387f615",
+        callback:
+          "https:\/\/store.geekho.asia\/wp-json\/wc-getloy-gateway\/v1\/payments\/payway_kh\/GKH-286\/status",
+        test_mode: false,
+        request_origin: "wc-getloy-gateway v1.1.2",
+        request_ip: "96.9.90.105",
+        request_country: "KH",
+        payee: {
+          first_name: "a",
+          last_name: "a",
+          company: "",
+          address: "a",
+          city: "z",
+          state: "KH-03",
+          postcode: "",
+          country: "KH",
+          email_address: "a@a.as",
+          mobile_number: "012345678",
+        },
+        order: {
+          total_amount: "99.01",
+          currency: "USD",
+          order_items: [
+            {
+              description: "Test product",
+              quantity: 1,
+              total_price: 0.01,
+              unit_price: 0.01,
+            },
+            {
+              description: "GetLoy subscription (1 year)",
+              quantity: 1,
+              total_price: 99,
+              unit_price: 99,
+            },
+          ],
+          order_timestamp: "2020-03-18T06:33:04+00:00",
+        },
+        payment_provider: {
+          init_token:
+            "e00f4b4421260e3c2481e2e910d8ceac4345b47dd42a6972c9c0cdb6a0913ed3326f8e61c448dbb6d080477942c736e9184ef3135d1c981c5a728ea5358d60b8",
+          status_token:
+            "62993620557d320ee485debb096a67ce8280d127f2416b10859d8b5001a0d0538f34b068ab4dc8575f21729828ae4e671b59cd3600f2fb69fb5640325dff1327",
+          payment_method: "all",
+        },
+      });
+      gl("success_callback", function() {
+        window.location =
+          "https://store.geekho.asia/checkout/order-received/286/?key=wc_order_xzKHMWR5VaWgR";
+      });
+      gl("cancel_callback", function() {
+        window.location = "https://store.geekho.asia/checkout/";
+      });
+    </script>
+</body>
+</html>
