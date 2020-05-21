@@ -3,8 +3,10 @@
 # docker-compose up --build --no-deps --force-recreate apache
 version: "3.7" #this is docker version is not app version
 services:
+
+  ###################### apache ########################
   apache: # apache server
-    container_name: for_web_tutorial
+    container_name: apache_pp
     build: # build from Docker file not from image
       context: .
       target: web_server
@@ -21,8 +23,10 @@ services:
       - TZ=Asia/Phnom_Penh
       - DEBIAN_FRONTEND=noninteractive
     # restart: always # this is to start container when docker start / or computer reboot
+    
+  ###################### MySQL ########################
   database: 
-    container_name: tutorial_db
+    container_name: mysql_pp
     build:
       context: .
       target: mysql
@@ -41,18 +45,21 @@ services:
       MYSQL_USER: seksitha
       MYSQL_USER_PASSWORD: 123456
       MYSQL_USER_HOST: "%"
-    
+
+  ###################### phpmyadmin ########################  
   phpmyadmin: ## this can also install in centos image but need extra config
     image: phpmyadmin/phpmyadmin
-    container_name: dbadmin
+    container_name: admin_pp
     links:
       - database # link to db service define so it can comunicate as a one server
     environment:
       - PMA_ARBITRARY=1
     ports:
       - 99:80 #ex#in
+
+  ###################### Node ########################
   node: # express server
-    container_name: node_server
+    container_name: node_pp
     build: 
       context: .
       target: node
